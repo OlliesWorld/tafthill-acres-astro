@@ -43,7 +43,7 @@ const [about] = abouts;
       {
         about.gallery.map((item: { alt: any }) => (
           <div class="py-2 px-1 inline-block w-full group">
-            <img src={urlFor(item).url()} alt={item.alt || ""} />
+            <img src={urlFor(item).url()} alt={item.alt || ""} loading="lazy"/>
           </div>
         ))
       }

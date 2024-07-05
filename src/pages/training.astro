@@ -11,15 +11,17 @@ const trainer = await getTraining();
 ---
 
 <Layout title="Training at Taft Hill Acres | Fort Collins Boarding Facility">
-  <section class="flex justify-center m-auto text-center lg:w-1/2 mb-6">
+  <section class="flex flex-col lg:flex-row lg:justify-center mx-auto text-center lg:w-1/2 my-6">
     {
       trainer.map((item: { trainer: string }) => (
         <a
-          class="text-darktan text-2xl font-extrabold  mr-12 hover:border-b-2"
+          class="text-darktan text-2xl font-extrabold lg:mr-12 mb-4"
           href={`#${item.trainer.toLowerCase().replace(/ /g, "-")}`}
           rel="noopener noreferrer"
         >
-          {item.trainer}
+          <span class="hover:border-b-2 hover:border-slate-50">
+            {item.trainer}
+          </span>
         </a>
       ))
     }
