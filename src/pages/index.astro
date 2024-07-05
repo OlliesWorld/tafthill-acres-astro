@@ -3,7 +3,7 @@ import { PortableText } from "astro-portabletext";
 import Layout from "../layouts/Layout.astro";
 import { getHomes } from "../utils/sanity";
 import { urlFor } from "../utils/image";
-
+import { Image } from 'astro:assets';
 const homes = await getHomes();
 const [home] = homes;
 // console.log(home.title);
@@ -20,7 +20,8 @@ const [home] = homes;
           <img
             class="z-10 object-cover w-full lg:w-5/6 m-auto"
             src={urlFor(home.mainImage).url()}
-            alt="Cover image"
+            alt="two horse noses sticking through the gate"
+            loading="eager"
           />
         ) : (
           <div class="" />
@@ -28,11 +29,11 @@ const [home] = homes;
       }
       <div class="w-full lg:w-5/6 my-12 m-auto lg:flex justify-center">
         <p
-          class="w-full lg:w-1/4 text-center border-b-2 lg:border-b-0 lg:border-r-2 border-darktan/50 lg:pr-8"
+          class="text-2xl w-full lg:w-2/5 text-center border-b-2 lg:border-b-0 lg:border-r-2 border-darktan/50 lg:pr-8"
         >
           {home.blurb}
         </p>
-        <p class="w-full lg:w-1/4 text-center mt-2 lg:pl-12">{home.blurb2}</p>
+        <p class="text-2xl w-full lg:w-2/5 text-center mt-2 lg:pl-12">{home.blurb2}</p>
       </div>
     </div>
     <section class="w-full bg-tan mx-auto py-8 lg:p-8">
@@ -52,9 +53,9 @@ const [home] = homes;
     </section>
   </div>
   <section class="lg:w-2/3 m-auto mt-24 masonry sm:masonry-sm md:masonry-md">
-    <div class="mx-auto w-3/4 lg:w-2/3 mt-4 pb-8">
+    <div class="text-center lg:text-left  mt-4 pb-8">
       <a
-        class="lg:w-3/4 bg-tan text-darktan mt-24 p-4 text-2xl font-extrabold"
+        class=" bg-tan text-darktan mt-24 p-4 text-2xl font-extrabold"
         href={home.buttoninternalLink} rel="noopener noreferrer">{home.button}</a
       >
     </div>
@@ -64,7 +65,7 @@ const [home] = homes;
           <img
             class="mb-4 lg:mb-0"
             src={urlFor(home.mason).url()}
-            alt="Cover image"
+            alt=""
             loading="lazy"
           />
         ) : (
@@ -108,9 +109,9 @@ const [home] = homes;
         <div class="" />
       )
     }
-    <div class="lg:w-3/5 ml-[85px] mt-8">
+    <div class="text-center lg:text-right mt-8">
       <a
-        class=" bg-tan text-darktan  p-4 lg:text-2xl font-extrabold"
+        class=" bg-tan text-darktan  p-4 text-2xl font-extrabold"
         href={home.button2internalLink} rel="noopener noreferrer">{home.button2}</a
       >
     </div>

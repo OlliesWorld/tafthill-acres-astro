@@ -1,6 +1,8 @@
 ---
 import Navigation from "./Navigation.astro";
 import Hamburger from "./Hamburger.astro";
+import { Image } from 'astro:assets';
+import Logo from "../../public/images/taft-hill-acres-logo.png";
 ---
 
 <header class="p-2">
@@ -8,9 +10,10 @@ import Hamburger from "./Hamburger.astro";
     <Hamburger />
     <Navigation />
   </nav>
-  <img
-    src="/images/Logo-THA.png"
-    alt="Taft Hill Acreslogo"
+  <Image
+    src={Logo}
+    alt="Taft Hill Acres logo"
     class="max-w-[550px] w-1/2 lg:w-1/3 m-auto"
+    loading={"eager"}
   />
 </header>

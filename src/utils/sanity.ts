@@ -19,7 +19,7 @@ export async function getHomes() {
 
 
 
-export async function getHome(slug) {
+export async function getHome(slug:any) {
   return await client.fetch(
     groq`*[_type == "home" && slug.current == $slug][0]`,
     {
