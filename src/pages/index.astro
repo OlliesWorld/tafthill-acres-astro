@@ -18,7 +18,7 @@ const [home] = homes;
       {
         home.mainImage ? (
           <img
-          class="z-10 object-cover w-full lg:w-5/6 m-auto"
+            class="z-10 object-cover w-full lg:w-5/6 m-auto"
             src={urlFor(home.mainImage).url()}
             alt="Cover image"
           />
@@ -41,28 +41,28 @@ const [home] = homes;
         <h2 class="text-black text-5xl text-center mb-12">{home.title2}</h2>
 
         <div class="lg:flex justify-center lg:text-left text-2xl items-center">
-          <div class="w-full mb-12 lg:w-1/2 p-4 lg:border-r-2 ">
+          <div class="w-full mb-12 lg:w-1/2 p-4 lg:border-r-2">
             <PortableText value={home.body} />
           </div>
-        <div class="w-full lg:w-1/2 lg:py-4 p-4 lg:pl-8">
-          <PortableText value={home.body2} />
+          <div class="w-full lg:w-1/2 lg:py-4 p-4 lg:pl-8">
+            <PortableText value={home.body2} />
+          </div>
         </div>
-      </div>
       </div>
     </section>
   </div>
   <section class="w-2/3 m-auto mt-24 masonry sm:masonry-sm md:masonry-md">
-    <div class="mt-8">
+    <div class="mx-auto w-2/3 mt-4 pb-8">
       <a
         class="w-3/4 bg-tan text-darktan mt-24 p-4 lg:text-2xl font-extrabold"
-        href={home.buttoninternalLink}>{home.button}</a
+        href={home.buttoninternalLink} rel="noopener noreferrer">{home.button}</a
       >
     </div>
     <div class="">
       {
         home.mason ? (
           <img
-          class="mb-4 lg:mb-0"
+            class="mb-4 lg:mb-0"
             src={urlFor(home.mason).url()}
             alt="Cover image"
           />
@@ -74,7 +74,7 @@ const [home] = homes;
     {
       home.mason2 ? (
         <img
-        class="mb-4 lg:mb-0"
+          class="mb-4 lg:mb-0"
           src={urlFor(home.mason2).url()}
           alt="Cover image"
         />
@@ -82,11 +82,10 @@ const [home] = homes;
         <div class="" />
       )
     }
-    <!-- <img class="mb-4" src={home.mason2.asset.gatsbyImageData} alt={home.mason2.asset.altText} /> -->
     {
       home.mason4 ? (
         <img
-        class="mb-4 lg:mb-0"
+          class="my-4 lg:mb-0"
           src={urlFor(home.mason4).url()}
           alt="Cover image"
         />
@@ -94,11 +93,10 @@ const [home] = homes;
         <div class="" />
       )
     }
-    <!-- <img class="mb-4 lg:mb-0" src={home.mason4.asset.gatsbyImageData} alt={home.mason4.asset.altText} /> -->
     {
       home.mason3 ? (
         <img
-        class="mb-4 lg:mb-0"
+          class="mb-4 lg:mb-0"
           src={urlFor(home.mason3).url()}
           alt="Cover image"
         />
@@ -106,10 +104,11 @@ const [home] = homes;
         <div class="" />
       )
     }
-    <!-- <img src={home.mason3.asset.gatsbyImageData} alt={home.mason3.asset.altText} class="mb-8 lg:mt-8"/> -->
-    <a
-      class="w-3/4 bg-tan text-darktan mt-12 p-4 lg:text-2xl font-extrabold"
-      href={home.button2internalLink}>{home.button2}</a
-    >
+    <div class="w-3/5 ml-[85px] mt-8">
+      <a
+        class=" bg-tan text-darktan  p-4 lg:text-2xl font-extrabold"
+        href={home.button2internalLink} rel="noopener noreferrer">{home.button2}</a
+      >
+    </div>
   </section>
 </Layout>

@@ -115,8 +115,12 @@ width: 80%;
 
   /* nav styles */
   .hamburger {
-    padding-right: 20px;
+    /* padding-right: 20px; */
     cursor: pointer;
+    width: 55px;
+    z-index: 1005;
+    position: fixed;
+    right: 0;
   }
   
   .hamburger .line {
@@ -126,15 +130,14 @@ width: 80%;
     margin-bottom: 10px;
     background-color: #616161;
   }
- 
-  .nav-links {
-    z-index: 1000;
-    position: absolute;
-    width: 75%;
-    top: 1rem;
-    left: 48px;
-    background-color: rgba(236,235,232, 0.9);
-  /* box-shadow: 2px 2px 6px rgba(0, 0, 0, .4); */
+
+.nav-links {
+  z-index: 1000;
+  position: fixed;
+  padding: 32px 0px 32px 15px;
+  top: 0;
+  left: 0;
+  background-color: rgba(236,235,232, 0.9);
     display: none;
     margin: 0;
   }

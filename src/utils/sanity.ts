@@ -1,16 +1,26 @@
-import { useSanityClient } from "@sanity/astro";
+import { createClient } from "@sanity/client";
 import type { PortableTextBlock } from "@portabletext/types";
 import type { ImageAsset, Slug } from "@sanity/types";
 import groq from "groq";
 
+// Create a Sanity client
+const client = createClient({
+  projectId: import.meta.env.VITE_PUBLIC_SANITY_STUDIO_PROJECT_ID,
+  dataset: "production",
+  useCdn: true,
+  apiVersion: '2024-01-24',
+});
+
 export async function getHomes() {
-  return await useSanityClient().fetch(
+  return await client.fetch(
     groq`*[_type == "home" && defined(slug.current)] | order(_createdAt desc)`
   );
 }
 
+
+
 export async function getHome(slug) {
-  return await useSanityClient().fetch(
+  return await client.fetch(
     groq`*[_type == "home" && slug.current == $slug][0]`,
     {
       slug,
@@ -32,11 +42,11 @@ export interface Home {
 }
 
 export async function getAbouts() {
-  return await useSanityClient().fetch(groq`*[_type == "about"]`);
+  return await client.fetch(groq`*[_type == "about"]`);
 }
 
 export async function getAbout(slug: any) {
-  return await useSanityClient().fetch(groq`*[_type == "about"]`, {
+  return await client.fetch(groq`*[_type == "about"]`, {
     slug,
   });
 }
@@ -54,11 +64,11 @@ export interface About {
   gallery?: ImageAsset[];
 }
 export async function getFacilities() {
-  return await useSanityClient().fetch(groq`*[_type == "facility" ]`);
+  return await client.fetch(groq`*[_type == "facility" ]`);
 }
 
 export async function getFacility(slug: any) {
-  return await useSanityClient().fetch(groq`*[_type == "facility"]`, {
+  return await client.fetch(groq`*[_type == "facility"]`, {
     slug,
   });
 }
@@ -77,11 +87,11 @@ export interface Facility {
   mainImage4?: ImageAsset;
 }
 export async function getTestimonials() {
-  return await useSanityClient().fetch(groq`*[_type == "testimonials" ]`);
+  return await client.fetch(groq`*[_type == "testimonials" ]`);
 }
 
 export async function getTestimonial(slug: any) {
-  return await useSanityClient().fetch(groq`*[_type == "testimonials"]`, {
+  return await client.fetch(groq`*[_type == "testimonials"]`, {
     slug,
   });
 }
@@ -125,10 +135,10 @@ export interface Testimonial {
 }
 
 export async function getContact() {
-  return await useSanityClient().fetch(groq`*[_type == "contact"]`);
+  return await client.fetch(groq`*[_type == "contact"]`);
 }
 export async function getContacts(slug: any) {
-  return await useSanityClient().fetch(groq`*[_type == "contact"]`, {
+  return await client.fetch(groq`*[_type == "contact"]`, {
     slug,
   });
 }
@@ -138,10 +148,10 @@ export interface Contact {
   title?: string;
 }
 export async function getTraining() {
-  return await useSanityClient().fetch(groq`*[_type == "training"]`);
+  return await client.fetch(groq`*[_type == "training"]`);
 }
 export async function getTrainings(slug: any) {
-  return await useSanityClient().fetch(groq`*[_type == "training"]`, {
+  return await client.fetch(groq`*[_type == "training"]`, {
     slug,
   });
 }
@@ -154,7 +164,7 @@ export interface Training {
   trainerImage?: ImageAsset;
 }
 export async function getTrainer_Description() {
-  return await useSanityClient().fetch(groq`*[_type == "training_description"]{mainImage, description}`);
+  return await client.fetch(groq`*[_type == "training_description"]{mainImage, description}`);
 }
 
 export interface Trainer_Description {
@@ -163,10 +173,10 @@ export interface Trainer_Description {
   mainImage?: ImageAsset;
 }
 export async function getThankyou() {
-  return await useSanityClient().fetch(groq`*[_type == "thankyou"]`);
+  return await client.fetch(groq`*[_type == "thankyou"]`);
 }
 export async function getThankyous(slug: any) {
-  return await useSanityClient().fetch(groq`*[_type == "thankyou"]`, {
+  return await client.fetch(groq`*[_type == "thankyou"]`, {
     slug,
   });
 }
