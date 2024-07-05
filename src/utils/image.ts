@@ -7,3 +7,6 @@ const builder = imageUrlBuilder(useSanityClient());
 export function urlFor(source: Image) {
   return builder.image(source);
 }
+export function urlForImage(image) {
+  return builder.image(image);
+}

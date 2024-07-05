@@ -1,0 +1,64 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { PortableText } from "astro-portabletext";
+
+import { getTrainer_Description, getTraining } from "../utils/sanity";
+import { urlFor } from "../utils/image";
+
+const descriptions = await getTrainer_Description();
+const [description] = descriptions;
+const trainer = await getTraining();
+
+---
+
+<Layout title="Training at Taft Hill Acres | Fort Collins Boarding Facility">
+  <section class="flex justify-center m-auto text-center lg:w-1/2 mb-6">
+    {trainer.map((item: { trainer: string; }) => (
+        <a
+          class="text-darktan text-2xl font-extrabold  mr-12 hover:border-b-2"
+         href={`#${item.trainer.toLowerCase().replace(/ /g, '-')}`}
+        >
+          {item.trainer}
+        </a>
+      ))}
+  </section>
+  <section class="lg:w-1/2 text-center m-auto mb-16">
+    {
+      description && (
+        <h4 class=" bg-darktan text-tan text-4xl px-4 py-8">
+          {description.description}
+        </h4>
+      )
+    }
+    <img
+      class="m-auto"
+      src={urlFor(description.mainImage.asset).url()}
+      alt={description.mainImage.alt}
+    />
+  </section>
+
+  {trainer.slice().reverse().map((item: { trainer: string; subtitle: string; body: any; trainerImage: string; }) => (
+    <section id={item.trainer.toLowerCase().replace(/ /g, '-')} class="m-auto text-center lg:w-1/2 mb-16">
+      <div class="md:w-2/3  bg-darktan p-4">
+        <h3 class="text-white mb-4 md:text-2xl text-left">
+          {item.subtitle}
+        </h3>
+        <h2 class="text-green text-4xl lg:text-6xl font-extrabold text-center mb-4">
+          {item.trainer}
+        </h2>
+      </div>
+      <img
+      class="m-auto h-[585px] w-full object-cover"
+        src={urlFor((item.trainerImage as any).asset).url()}
+        alt={`Trainer ${item.trainer} working with horse`}
+      />
+
+      <div class="px-4 lg:px-0 text-left mt-6 text-xl md:text-2xl ">
+        
+        <PortableText class="trainer" value={item.body}  />
+      </div>
+    </section>
+  ))}
+
+</Layout>
+

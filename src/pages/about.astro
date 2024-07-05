@@ -1,0 +1,44 @@
+---
+import { PortableText } from "astro-portabletext";
+import Layout from "../layouts/Layout.astro";
+import { getAbouts } from "../utils/sanity";
+import { urlFor, urlForImage} from "../utils/image";
+
+
+const abouts = await getAbouts();
+const [about] = abouts;
+
+// console.log('about', about.gallery);
+---
+<Layout title="Taft Hill Acres | About">
+    <div class="text-center  h-full w-full md:h-3/4 md:w-3/4 m-auto mb-8">
+     <div class="m-auto text-center">
+        {about.mainImage ? (
+              <img
+              class="z-10 object-cover w-full lg:w-5/6 m-auto"
+                src={urlFor(about.mainImage).url()}
+                alt="Cover image"
+              />
+            ) : (
+              <div class="" />
+            )}
+       </div>
+       <div class="lg:w-3/4 bg-darktan mx-auto p-4 lg:p-12">
+       <h3 class="text-left text-black font-bold text-2xl">{about.subtitle}</h3>
+       <h2 class="text-green text-5xl text-center mb-4">{about.title}</h2>
+       <PortableText class="text-white text-left text-2xl" value={about.body} />
+     </div>
+     <div class="lg:w-3/4 bg-darktan mx-auto my-8 p-4 lg:p-12">
+       <h3 class="text-left text-black font-bold text-2xl">{about.subtitle2}</h3>
+       <h2 class="text-green text-5xl text-center mb-4">{about.title2}</h2>
+       <PortableText class="text-white text-left text-2xl" value={about.body2} />
+     </div>
+       <div class=" lg:columns-3 sm:columns-2 gap-4">
+                   {about.gallery.map((item: { alt: any; }) => (
+                    <div class="py-2 px-1 inline-block w-full group">
+                        <img src={urlForImage(item).url()} alt={item.alt || ''} />
+                       </div>
+                   ))}             
+       </div>
+     </div>
+ </Layout>

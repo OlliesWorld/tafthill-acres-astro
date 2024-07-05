@@ -1,0 +1,309 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getTestimonials } from "../utils/sanity";
+import { urlFor } from "../utils/image";
+
+const testimonials = await getTestimonials();
+const [testimonial] = testimonials;
+// console.log(testimonial);
+---
+
+<Layout title="Testimonials">
+  <h2 class="text-darktan text-5xl text-center mb-8">{testimonials.title}</h2>
+
+  <div class="lg:w-3/4 m-auto gap-8 mb-12 text-xl">
+    <h1 class="text-darktan font-extrabold text-5xl text-center mb-8">
+      Testimonials
+    </h1>
+    {
+      testimonial.quote && (
+        <div class="lg:flex mb-12 ">
+          <img
+            src={urlFor(testimonial.image1).url()}
+            alt={testimonials.image1}
+            class="h-96  lg:mr-4"
+          />
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>" {testimonial.quote} "</p>
+            <p class="font-bold text-darktan text-center mt-8">
+              ~ {testimonial.name} ~
+            </p>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      testimonial.quote2 && (
+        <div class="lg:flex mb-12 ">
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>" {testimonial.quote2} "</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name2} ~
+            </p>
+          </div>
+          <img
+            src={urlFor(testimonial.image2).url()}
+            alt={testimonial.image2}
+            class="lg:h-96  lg:ml-4"
+          />
+        </div>
+      )
+    }
+    {
+      testimonial.quote3 && (
+        <div class="lg:flex mb-12 ">
+          <img
+            src={urlFor(testimonial.image3).url()}
+            alt={testimonial.image3}
+            class="lg:h-96  lg:mr-4"
+          />
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote3}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name3}~
+            </p>
+          </div>
+        </div>
+      )
+    }
+    {
+      testimonial.quote4 && (
+        <div class="lg:flex mb-12 ">
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote4}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name4}~
+            </p>
+          </div>
+          <img
+            src={urlFor(testimonial.image4).url()}
+            alt={testimonial.image4}
+            class="lg:h-96  lg:ml-4"
+          />
+        </div>
+      )
+    }
+
+    {
+      testimonial.quote5 && (
+        <div class="lg:flex mb-12 ">
+          <img
+            src={urlFor(testimonial.image5).url()}
+            alt={testimonial.image5}
+            class="h-96  lg:mr-4"
+          />
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>" {testimonial.quote5} "</p>
+            <p class="font-bold text-darktan text-center mt-8">
+              ~ {testimonial.name5} ~
+            </p>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      testimonial.quote6 && (
+        <div class="lg:flex mb-12 ">
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>" {testimonial.quote6} "</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name6} ~
+            </p>
+          </div>
+          <img
+            src={urlFor(testimonial.image6).url()}
+            alt={testimonial.image6}
+            class="lg:h-96  lg:ml-4"
+          />
+        </div>
+      )
+    }
+    {
+      testimonial.quote7 && (
+        <div class="lg:flex mb-12 ">
+          <img
+            src={urlFor(testimonial.image7).url()}
+            alt={testimonial.image7}
+            class="lg:h-96  lg:mr-4"
+          />
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote7}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name7}~
+            </p>
+          </div>
+        </div>
+      )
+    }
+    {
+      testimonial.quote8 && (
+        <div class="lg:flex mb-12 ">
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote8}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name8}~
+            </p>
+          </div>
+          <img
+            src={urlFor(testimonial.image8).url()}
+            alt={testimonial.image8}
+            class="lg:h-96  lg:ml-4"
+          />
+        </div>
+      )
+    }
+    {
+      testimonial.quote9 && (
+        <div class="lg:flex mb-12 ">
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote9}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name9}~
+            </p>
+          </div>
+          <img
+            src={urlFor(testimonial.image9).url()}
+            alt={testimonial.image9}
+            class="lg:h-96  lg:ml-4"
+          />
+        </div>
+      )
+    }
+    {
+      testimonial.quote10 && (
+        <div class="lg:flex mb-12 ">
+          <img
+            src={urlFor(testimonial.image10).url()}
+            alt={testimonial.image10}
+            class="h-96  lg:mr-4"
+          />
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>" {testimonial.quote10} "</p>
+            <p class="font-bold text-darktan text-center mt-8">
+              ~ {testimonial.name10} ~
+            </p>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      testimonial.quote11 && (
+        <div class="lg:flex mb-12 ">
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>" {testimonial.quote11} "</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name11} ~
+            </p>
+          </div>
+          <img
+            src={urlFor(testimonial.image11).url()}
+            alt={testimonial.image11}
+            class="lg:h-96  lg:ml-4"
+          />
+        </div>
+      )
+    }
+    {
+      testimonial.quote12 && (
+        <div class="lg:flex mb-12 ">
+          <imge
+            src={urlFor(testimonial.image12).url()}
+            alt={testimonial.image12}
+            class="lg:h-96  lg:mr-4"
+          />
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote12}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name12}~
+            </p>
+          </div>
+        </div>
+      )
+    }
+    {
+      testimonial.quote13 && (
+        <div class="lg:flex mb-12 ">
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote13}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name13}~
+            </p>
+          </div>
+          <img
+            src={urlFor(testimonial.image13).url()}
+            alt={testimonial.image13}
+            class="lg:h-96  lg:ml-4"
+          />
+        </div>
+      )
+    }
+    {
+      testimonial.quote14 && (
+        <div class="lg:flex mb-12 ">
+          <img
+            src={urlFor(testimonial.image14).url()}
+            alt={testimonial.image14}
+            class="lg:h-96  lg:mr-4"
+          />
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote14}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name14}~
+            </p>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      testimonial.quote15 && (
+        <div class="lg:flex mb-12 ">
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote15}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name15}~
+            </p>
+          </div>
+          <img
+            src={urlFor(testimonial.image15).url()}
+            alt={testimonial.image15}
+            class="lg:h-96  lg:ml-4"
+          />
+        </div>
+      )
+    }
+    {
+      testimonial.quote16 && (
+        <div class="lg:flex mb-12 16" >
+          <img
+            src={urlFor(testimonial.image16).url()}
+            alt={testimonial.image16}
+            class="lg:h-96  lg:mr-4"
+          />
+          <div class="lg:w-2/3 bg-tan my-auto p-8">
+            <p>"{testimonial.quote16}"</p>
+            <p class="text-darktan font-bold text-center mt-12">
+              {" "}
+              ~{testimonial.name16}~
+            </p>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</Layout>
