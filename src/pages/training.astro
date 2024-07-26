@@ -11,7 +11,7 @@ const trainer = await getTraining();
 ---
 
 <Layout title="Training at Taft Hill Acres | Fort Collins Boarding Facility">
-  <section class="flex flex-col lg:flex-row lg:justify-center mx-auto text-center lg:w-1/2 my-6">
+  <section class="flex flex-col lg:flex-row lg:justify-center mx-auto text-center  my-6">
     {
       trainer.map((item: { trainer: string }) => (
         <a
@@ -56,7 +56,7 @@ const trainer = await getTraining();
             id={item.trainer.toLowerCase().replace(/ /g, "-")}
             class="m-auto text-center lg:w-1/2 mb-16"
           >
-            <div class="md:w-2/3  bg-darktan p-4">
+            <div class="bg-darktan p-4">
               <h3 class="text-white mb-4 md:text-2xl text-left">
                 {item.subtitle}
               </h3>
