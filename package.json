@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./public/styles/tailwind.css --watch",
     "preview": "astro preview",
     "astro": "astro"
   },
