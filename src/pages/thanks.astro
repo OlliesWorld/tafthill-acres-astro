@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout.astro"
 import { getThankyous } from "../utils/sanity";
 import { urlFor } from "../utils/image";
 
+export const prerender = true;
+
 const thanks = await getThankyous("thanks");
 const [thank] = thanks;
 ---
