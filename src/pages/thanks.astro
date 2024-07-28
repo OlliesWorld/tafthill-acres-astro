@@ -9,11 +9,11 @@ const thanks = await getThankyous("thanks");
 const [thank] = thanks;
 ---
 <Layout title="Thank you from Taft Hill Acres | Fort Collins Boarding Facility">
-     <div class="w-5/6 lg:w-1/2 bg-tan mx-auto p-8">
-       <h2 class="text-green text-5xl text-center mb-4">{thank.title}</h2>
-       <h3 class="text-darktan text-2xl">{thank.subtitle}</h3>
+  <div class="flex text-center justify-center mt-32 lg:mt-0"> 
+    <div class="w-full -mt-24 lg:mt-0 lg:w-1/2 lg:h-1/2  bg-tan p-8">
+      <h2 class="text-green text-5xl text-center mb-4">{thank.title}</h2>
+      <h3 class="text-darktan text-2xl">{thank.subtitle}</h3>
+      <img class="lg:w-1/2 mx-auto" src={urlFor(thank.mainImage).url()} alt={thank.mainImage} />
        </div>
-       <div class="w-1/2 mx-auto">
-       <img class="w-full" src={urlFor(thank.mainImage).url()} alt={thank.mainImage} />
-     </div>
+      </div>
 </Layout>
