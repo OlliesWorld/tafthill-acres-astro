@@ -24,15 +24,18 @@ import tailwind from "@astrojs/tailwind";
 // https://astro.build/config
 export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
-  output: "hybrid",
+  output: 'server',
   adapter: netlify(),
   integrations: [sanity({
     projectId,
     dataset,
-    studioBasePath: "/admin",
     useCdn: false,
     // `false` if you want to ensure fresh data
-    apiVersion: "2023-03-20" // Set to date of setup to use the latest API version
+    apiVersion: "2024-07-24", // Set to date of setup to use the latest API version
+    studioBasePath: '/studio',
+    stega: {
+      studioUrl: "/studio",
+    },
   }), react() // Required for Sanity Studio
   , tailwind()]
 });

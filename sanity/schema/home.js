@@ -1,11 +1,9 @@
-
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
     name: 'home',
     type: 'document',
     title: 'Home',
-    icon: HomeIcon,
     fields: [    
       defineField({
         name: 'mainImage',

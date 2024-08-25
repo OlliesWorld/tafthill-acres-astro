@@ -4,7 +4,6 @@ export default defineType({
     name: 'thankyou',
     type: 'document',
     title: 'Thank You',  
-      icon:    EnvelopeIcon,
       fields: [        
         defineField({
             name: 'mainImage',

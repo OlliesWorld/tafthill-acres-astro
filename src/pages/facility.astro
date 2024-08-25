@@ -1,85 +1,69 @@
 ---
-// import { PortableText } from "astro-portabletext";
 import Layout from "../layouts/Layout.astro";
-import { getFacilities } from "../utils/sanity";
 import { urlFor } from "../utils/image";
+import { loadQuery } from '../../sanity/lib/load-query';
+import { decodeHtmlEntities, cleanText } from "../utils/textUtils"; // Import the utility functions
+import type { ImageAsset } from "@sanity/types";
 
-const facilities = await getFacilities();
-const [facility] = facilities;
+const result = await loadQuery<Array<{title: string, mainImage: ImageAsset, article: string, mainImage2: ImageAsset, article2: string, mainImage3: ImageAsset, article3: string, mainImage4: ImageAsset, article4: string}>>({
+  query: `*[_type == 'facility'] | order(_createdAt desc) {
+    title,
+    mainImage,
+    article,
+    mainImage2,
+    article2,
+    mainImage3,
+    article3,
+    mainImage4,
+    article4
+  }`,
+});
 
+interface Facility {
+  title: string;
+  mainImage: ImageAsset;
+  article: string;
+  mainImage2: ImageAsset;
+  article2: string;
+  mainImage3: ImageAsset;
+  article3: string;
+  mainImage4: ImageAsset;
+  article4: string;
+}
+
+// Clean the fetched data
+const facilities: Facility[] = result ? result.data.map(facility => ({
+  ...facility,
+  title: typeof facility.title === 'string' ? decodeHtmlEntities(facility.title) : facility.title,
+  article: typeof facility.article === 'string' ? decodeHtmlEntities(facility.article) : facility.article,
+  article2: typeof facility.article2 === 'string' ? decodeHtmlEntities(facility.article2) : facility.article2,
+  article3: typeof facility.article3 === 'string' ? decodeHtmlEntities(facility.article3) : facility.article3,
+  article4: typeof facility.article4 === 'string' ? decodeHtmlEntities(facility.article4) : facility.article4,
+})) : [];
+// console.log('facilities', facilities);
 ---
 
 <Layout title="Facility">
-  <h2 class="text-darktan text-5xl text-center mb-8">{facility.title}</h2>
   <div class="m-auto text-center">
-    {
-      facility.mainImage ? (
-        <img
-          class="z-10 object-cover w-full lg:w-3/4 m-auto"
-          src={urlFor(facility.mainImage).url()}
-          alt="Cover image"
-        />
-      ) : (
-        <div class="" />
-      )
-    }
-  </div>
-  <div class="w-5/6 lg:w-1/2 text-center mx-auto my-8 text-xl md:text-4xl">
-    <p class="leading-relaxed">{facility.article[0]}</p>
-    <p class="leading-relaxed">{facility.article[1]}</p>
-    <p class="leading-relaxed">{facility.article[2]}</p>
-    <p class="leading-relaxed">{facility.article[3]}</p>
-  </div>
-  <div class="m-auto text-center">
-    {
-      facility.mainImage2 ? (
-        <img
-          class="z-10 object-cover w-full lg:w-3/4 m-auto"
-          src={urlFor(facility.mainImage2).url()}
-          alt="Cover image"
-        />
-      ) : (
-        <div class="" />
-      )
-    }
-  </div>
-
-  <div class="w-5/6 lg:w-1/2 text-center mx-auto my-8 text-xl md:text-4xl">
-    <p class="leading-relaxed">{facility.article2[0]}</p>
-    <p class="leading-relaxed">{facility.article2[1]}</p>
-    <p class="leading-relaxed">{facility.article2[2]}</p>
-    <p class="leading-relaxed">{facility.article2[3]}</p>
-  </div>
-  <div class="m-auto text-center">
-    {
-      facility.mainImage3 ? (
-        <img
-          class="z-10 object-cover w-full lg:w-3/4 m-auto"
-          src={urlFor(facility.mainImage3).url()}
-          alt="Cover image"
-        />
-      ) : (
-        <div class="" />
-      )
-    }
-  </div>
-  <div class="w-5/6 lg:w-1/2 text-center mx-auto my-8 text-xl md:text-4xl">
-    <p class="leading-relaxed">{facility.article3[0]}</p>
-    <p class="leading-relaxed">{facility.article3[1]}</p>
-    <p class="leading-relaxed">{facility.article3[2]}</p>
-    <p class="leading-relaxed">{facility.article3[3]}</p>
-  </div>
-  <div class="m-auto text-center">
-    {
-      facility.mainImage4 ? (
-        <img
-          class="z-10 object-cover w-full lg:w-3/4 m-auto"
-          src={urlFor(facility.mainImage4).url()}
-          alt="Cover image"
-        />
-      ) : (
-        <div class="" />
-      )
-    }
+    {facilities.map((facility) => (
+      <div>
+        <h3 class="text-darktan text-5xl text-center my-8 font-extrabold">{cleanText(facility.title)}</h3>
+        <img class="z-10 object-cover w-full lg:w-3/4 m-auto" src={urlFor(facility.mainImage).url()} alt={`${cleanText(facility.title)}`} />
+        {[facility.article, facility.article2, facility.article3, facility.article4].map((content, idx) => {
+          const imageKey = `mainImage${idx + 2}` as keyof Facility;
+          const image = facility[imageKey];
+          return (
+            <div class="w-5/6 lg:w-1/2 text-center mx-auto my-8 text-xl md:text-4xl">
+              {String(content).split('\n').map((line) => (
+                <p class="leading-relaxed mb-8 whitespace-pre-line">{cleanText(line)}</p>
+              ))}
+              {image && typeof image !== 'string' && (
+                <img class="z-10 object-cover w-full lg:w-3/4 m-auto" src={urlFor(image).url()} alt={`${cleanText(facility.title)}`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    ))}
   </div>
 </Layout>

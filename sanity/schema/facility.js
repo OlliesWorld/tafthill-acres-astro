@@ -4,7 +4,6 @@ export default defineType({
     name: 'facility',
     type: 'document',
     title: 'Facility',
-    icon,
       fields: [ 
         defineField({
             name: 'title',

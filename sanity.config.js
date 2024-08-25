@@ -8,15 +8,18 @@ if (!projectId || !dataset) {
     throw new Error(`Missing environment variable(s). Check if named correctly in .env file.\n\nShould be:\nPUBLIC_SANITY_STUDIO_PROJECT_ID=${projectId}\nPUBLIC_SANITY_STUDIO_DATASET=${dataset}\n\nAvailable environment variables:\n${JSON.stringify(import.meta.env, null, 2)}`);
 }
 import { defineConfig } from "sanity";
-import { deskTool } from "sanity/desk";
 import { visionTool } from "@sanity/vision";
-import { schemaTypes } from "./schema";
+import { schemaTypes } from "./sanity/schema";
+import { structureTool } from "sanity/structure";
+import { presentationTool } from "sanity/presentation";
 export default defineConfig({
     name: "project-name",
     title: "Project Name",
     projectId,
     dataset,
-    plugins: [deskTool(), visionTool()],
+    plugins: [ structureTool(), visionTool(), presentationTool({
+        previewUrl: location.origin,
+      })],
     schema: {
         types: schemaTypes,
     },

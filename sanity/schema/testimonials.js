@@ -5,7 +5,6 @@ export default defineType({
     name: 'testimonials',
     type: 'document',
       title: 'Testimonials',
-      icon,
     fields: [
         defineField({
             name: 'title',

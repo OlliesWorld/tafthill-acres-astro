@@ -1,61 +1,135 @@
 ---
+import type { ImageAsset } from "@sanity/types";
 import Layout from "../layouts/Layout.astro";
-import { getTestimonials } from "../utils/sanity";
 import { urlFor } from "../utils/image";
+import { loadQuery } from "../../sanity/lib/load-query";
+import { decodeHtmlEntities, cleanText } from "../utils/textUtils";
 
-const testimonials = await getTestimonials();
-const [testimonial] = testimonials;
-// console.log(testimonial.image1);
+interface Testimonial {
+  slug: string;
+  title?: string;
+  quotes?: { [key: string]: string };
+  names?: { [key: string]: string };
+  images?: { [key: string]: ImageAsset };
+}
+
+const response = await loadQuery<Testimonial[]>({
+  query: `*[_type == 'testimonials'] | order(_createdAt desc) {
+    slug,
+    title,
+    "quotes": {
+      "quote1": quote,
+      "quote2": quote2,
+      "quote3": quote3,
+      "quote4": quote4,
+      "quote5": quote5,
+      "quote6": quote6,
+      "quote7": quote7,
+      "quote8": quote8,
+      "quote9": quote9,
+      "quote10": quote10,
+      "quote11": quote11,
+      "quote12": quote12,
+      "quote13": quote13,
+      "quote14": quote14,
+      "quote15": quote15,
+      "quote16": quote16
+    },
+    "names": {
+      "name1": name,
+      "name2": name2,
+      "name3": name3,
+      "name4": name4,
+      "name5": name5,
+      "name6": name6,
+      "name7": name7,
+      "name8": name8,
+      "name9": name9,
+      "name10": name10,
+      "name11": name11,
+      "name12": name12,
+      "name13": name13,
+      "name14": name14,
+      "name15": name15,
+      "name16": name16
+    },
+    "images": {
+      "image1": image1,
+      "image2": image2,
+      "image3": image3,
+      "image4": image4,
+      "image5": image5,
+      "image6": image6,
+      "image7": image7,
+      "image8": image8,
+      "image9": image9,
+      "image10": image10,
+      "image11": image11,
+      "image12": image12,
+      "image13": image13,
+      "image14": image14,
+      "image15": image15,
+      "image16": image16
+    }
+  }`,
+});
+
+const result: Testimonial[] = response.data;
+// console.log('result', result);
+
+// console.log('testimonials', transformedTestimonials);
 ---
 
 <Layout title="Testimonials">
-  <h2 class="text-darktan text-5xl text-center mb-8">{testimonials.title}</h2>
+  <div class="m-automb-12 text-xl">
+    <div>
+      {
+        result.map((item: Testimonial) => (
+          <div class="mb-8">
+            <h2 class="text-darktan font-extrabold text-5xl text-center mb-8">
+              {item.title}
+            </h2>
+            <div class="m-auto text-center">
+              {item.quotes &&
+                Object.entries(item.quotes)
+                  .sort(([keyA], [keyB]) => {
+                    const numA = parseInt(keyA.replace("quote", ""), 10);
+                    const numB = parseInt(keyB.replace("quote", ""), 10);
+                    return numA - numB;
+                  })
+                  .slice(0, 14)
+                  .map(([key, quote]) => {
+                    const imageKey = key.replace("quote", "image");
+                    const nameKey = key.replace("quote", "name");
+                    const image = item.images ? item.images[imageKey] : null;
+                    const name = item.names ? item.names[nameKey] : null;
 
-  <div class="lg:w-3/4 m-auto gap-8 mb-12 text-xl">
-    <h1 class="text-darktan font-extrabold text-5xl text-center mb-8">
-      Testimonials
-    </h1>
-    {
-      Object.keys(testimonial)
-        .sort((a, b) => {
-          const numA = parseInt(a.replace("quote", ""), 10);
-          const numB = parseInt(b.replace("quote", ""), 10);
-          return numA - numB;
-        })
-        .map((key, index) => {
-          if (key.startsWith("quote")) {
-            const quoteNumber = key.replace("quote", "");
-            let imageKey = `image${quoteNumber}`;
-            if (!testimonial[imageKey]) {
-              imageKey = `image1`;
-            }
-            const nameKey = `name${quoteNumber}`;
-
-            return (
-              <div
-                class={`lg:flex mb-12 ${
-                  index % 2 !== 0 ? "flex-row-reverse" : ""
-                }`}
-              >
-                {testimonial[imageKey] && (
-                  <div class="">
-                    <img
-                      src={urlFor(testimonial[imageKey]).url()}
-                      alt={testimonial[imageKey]}
-                      class="w-full h-[450px] object-contain"
-                    />
-                  </div>
-                )}
-                <div class="lg:w-2/3 bg-tan my-auto p-8">
-                  <p class="text-2xl">"{testimonial[key]}"</p>
-                  <p class="text-2xl font-bold text-darktan text-center mt-8">
-                    ~ {testimonial[nameKey]} ~
-                  </p>
-                </div>
-              </div>
-            );
-          }
-        })
-    }
+                    return (
+                      <div class="flex mb-8 justify-center">
+                        {image && image.asset ? (
+                          <img
+                            class=" h-[350px] object-contain"
+                            src={urlFor(image).url()}
+                            alt={`Image for ${key}`}
+                          />
+                        ) : (
+                          <p>No image available for {key}</p>
+                        )}
+                        <div class="lg:w-2/3 bg-tan my-auto p-12">
+                          <p class="text-darktan text-2xl font-extrabold">
+                            {decodeHtmlEntities(cleanText(quote))}
+                          </p>
+                          <p class="text-darktan text-2xl font-extrabold">
+                            {name}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+            </div>
+          </div>
+        ))
+      }
+    </div>
   </div>
 </Layout>

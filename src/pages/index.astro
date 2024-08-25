@@ -1,30 +1,109 @@
 ---
-import { PortableText } from "astro-portabletext";
 import Layout from "../layouts/Layout.astro";
-import { getHomes } from "../utils/sanity";
 import { urlFor } from "../utils/image";
-// import { Image } from 'astro:assets';
-const homes = await getHomes();
-const [home] = homes;
-// console.log(home.title);
+import {loadQuery} from '../../sanity/lib/load-query'
+import { PortableText } from "astro-portabletext";
+import type { PortableTextBlock } from "@portabletext/types";
+import type { ImageAsset} from "@sanity/types";
+import { decodeHtmlEntities, cleanText } from "../utils/textUtils";
+
+interface Home {
+  _type: "home";
+  title?: string;
+  subTitle?: string;
+  blurb?: string;
+  blurb2?: string;
+  subTitle2?: string;
+  title2?: string;
+  body: PortableTextBlock[];
+  body2: PortableTextBlock[];
+  mainImage?: ImageAsset;
+  mason?: ImageAsset[];
+  mason2?: ImageAsset[];
+  mason3?: ImageAsset[];
+  mason4?: ImageAsset[];
+  button?: string;
+  buttoninternalLink?: string;
+  button2?: string;
+  button2internalLink?: string;
+}
+
+const result = await loadQuery<Home>({
+   query: `*[_type == 'home'] | order(_createdAt desc) {
+    title,
+    subTitle,
+    blurb,
+    blurb2,
+    subtitle2,
+    title2,
+    body,
+    body2,
+    mainImage,
+    mason,
+    mason2,
+    mason3,
+    mason4,
+    button,
+    buttoninternalLink,
+    button2,
+    button2internalLink
+  }[0]`,
+});
+// console.log('result', result);
+const home = result && result.data ? {
+  title: typeof result.data.title === 'string' ? cleanText(decodeHtmlEntities(result.data.title)) : '',
+  subTitle: typeof result.data.subTitle === 'string' ? cleanText(decodeHtmlEntities(result.data.subTitle)) : result.data.subTitle,
+  blurb: typeof result.data.blurb === 'string' ? cleanText(decodeHtmlEntities(result.data.blurb)) : result.data.blurb,
+  blurb2: typeof result.data.blurb2 === 'string' ? cleanText(decodeHtmlEntities(result.data.blurb2)) : result.data.blurb2,
+  subTitle2: typeof result.data.subTitle2 === 'string' ? cleanText(decodeHtmlEntities(result.data.subTitle2)) : result.data.subTitle2,
+  title2: typeof result.data.title2 === 'string' ? cleanText(decodeHtmlEntities(result.data.title2)) : result.data.title2,
+  body: Array.isArray(result.data.body) ? result.data.body : [],
+  body2: Array.isArray(result.data.body2) ? result.data.body2 : [],
+  mainImage: result.data.mainImage || '',
+  mason: result.data.mason || '',
+  mason2: result.data.mason2 || '',
+  mason3: result.data.mason3 || '',
+  mason4: result.data.mason4 || '',
+  button: result.data.button || '',
+  buttoninternalLink: result.data.buttoninternalLink || '',
+  button2: result.data.button2 || '',
+  button2internalLink: result.data.button2internalLink || '',
+} :  {
+  title: '',
+  subtitle: '',
+  blurb: '',
+  blurb2: '',
+  title2: '',
+  subtitle2: '',
+  body: [],
+  body2: [],
+  mainImage: '',
+  mason: [],
+  mason2: [],
+  mason3: [],
+  mason4: [],
+  button: '',
+  buttoninternalLink: '',
+  button2: '',
+  button2internalLink: ''
+};
+// console.log('home', home);
 ---
 
 <Layout title="Taft Hill Acres">
-  <div class="text-center h-full m-auto my-8">
+   <div class="text-center h-full m-auto my-8">
     <h1 class="w-full  bg-tan text-4xl  p-6 m-auto">
       {home.title}
     </h1>
     <div class="w-full  m-auto text-center">
       {
-        home.mainImage ? (
+        home.mainImage && (
           <img
             class="z-10 object-cover w-full m-auto"
-            src={urlFor(home.mainImage).url()}
+            src={urlFor((home.mainImage as any).asset).url()}
             alt="two horse noses sticking through the gate"
             loading="eager"
           />
-        ) : (
-          <div class="" />
         )
       }
       <div class="w-full lg:w-5/6 my-12 m-auto lg:flex justify-center">
@@ -56,63 +135,55 @@ const [home] = homes;
     <div class="text-center lg:text-left  mt-4 pb-8">
       <a
         class=" bg-tan text-darktan mt-24 p-4 text-2xl font-extrabold"
-        href={home.buttoninternalLink} rel="noopener noreferrer">{home.button}</a
+        href={cleanText(decodeHtmlEntities(home.buttoninternalLink))} rel="noopener noreferrer">{cleanText(decodeHtmlEntities(home.button))}</a
       >
     </div>
     <div class="">
       {
-        home.mason ? (
+        home.mason && (
           <img
             class="mb-4 lg:mb-0"
-            src={urlFor(home.mason).url()}
+            src={urlFor((home.mason as any).asset).url()}
             alt=""
             loading="lazy"
           />
-        ) : (
-          <div class="" />
-        )
+        ) 
       }
     </div>
     {
-      home.mason2 ? (
+      home.mason2 && (
         <img
           class="mb-4 lg:mb-0"
-          src={urlFor(home.mason2).url()}
+          src={urlFor((home.mason2 as any).asset).url()}
           alt="Cover image"
           loading="lazy"
         />
-      ) : (
-        <div class="" />
-      )
+      ) 
     }
     {
-      home.mason4 ? (
+      home.mason4 && (
         <img
           class="my-4 lg:mb-0"
-          src={urlFor(home.mason4).url()}
+          src={urlFor((home.mason4 as any).asset).url()}
           alt="Cover image"
           loading="lazy"
         />
-      ) : (
-        <div class="" />
-      )
+      ) 
     }
     {
-      home.mason3 ? (
+      home.mason3 && (
         <img
           class="mb-4 lg:mb-0"
-          src={urlFor(home.mason3).url()}
+          src={urlFor((home.mason3 as any).asset).url()}
           alt="Cover image"
           loading="lazy"
         />
-      ) : (
-        <div class="" />
-      )
+      ) 
     }
     <div class="text-center lg:text-right mt-8">
       <a
         class=" bg-tan text-darktan  p-4 text-2xl font-extrabold"
-        href={home.button2internalLink} rel="noopener noreferrer">{home.button2}</a
+        href={cleanText(decodeHtmlEntities(home.button2internalLink))} rel="noopener noreferrer">{cleanText(decodeHtmlEntities(home.button2))}</a
       >
     </div>
   </section>

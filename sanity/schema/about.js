@@ -4,7 +4,6 @@ export default defineType({
     name: 'about',
     type: 'document',
       title: 'About',
-      icon,
       fields: [        
         defineField({
             name: 'mainImage',

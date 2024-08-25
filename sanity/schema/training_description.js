@@ -5,7 +5,6 @@ export default defineType({
     name: 'training_description',
     type: 'document',
       title: 'Training Description',
-      icon,
       fields: [        
         defineField({
             name: 'mainImage',
