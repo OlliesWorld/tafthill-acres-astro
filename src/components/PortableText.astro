@@ -1,18 +1,17 @@
 ---
-// @ts-nocheck
-import { PortableText as PortableTextInternal } from 'astro-portabletext'
+import { PortableText as PortableTextInternal } from 'astro-portabletext';
 const { portableText } = Astro.props;
 import type {
   PortableTextBlock,
   PortableTextSpan
-} from '@portabletext/types'
+} from '@portabletext/types';
 
 const headingSpan: PortableTextSpan = {
   _type: 'span',
   _key: '5p4n',
   text: 'A simple Portable Text heading block',
   marks: [],
-}
+};
 
 const myBlocks: PortableTextBlock[] = [
   {
@@ -27,9 +26,9 @@ const myBlocks: PortableTextBlock[] = [
     _key: 'xyz987',
     style: 'normal',
     children: [
-      {_type: 'span', _key: 'c7', text: 'Check out the ', marks: []},
-      {_type: 'span', _key: 'x2', text: 'TypeScript definitions', marks: ['m4hl1nk']},
-      {_type: 'span', _key: 'u5', text: ' if you are using TS!', marks: []}
+      { _type: 'span', _key: 'c7', text: 'Check out the ', marks: [] },
+      { _type: 'span', _key: 'x2', text: 'TypeScript definitions', marks: ['m4hl1nk'] },
+      { _type: 'span', _key: 'u5', text: ' if you are using TS!', marks: [] }
     ],
     markDefs: [
       {
@@ -39,9 +38,8 @@ const myBlocks: PortableTextBlock[] = [
       }
     ],
   },
-]
-
-
+];
 ---
 
-<PortableTextInternal value={portableText} />
+<!-- Ensure portableText is passed correctly -->
+<PortableTextInternal value={portableText || myBlocks} />

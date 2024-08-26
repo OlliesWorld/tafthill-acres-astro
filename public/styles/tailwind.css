@@ -726,8 +726,8 @@ video {
   height: 2rem;
 }
 
-.h-\[450px\] {
-  height: 450px;
+.h-\[350px\] {
+  height: 350px;
 }
 
 .h-\[585px\] {
@@ -782,10 +782,6 @@ video {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.flex-row-reverse {
-  flex-direction: row-reverse;
-}
-
 .flex-col {
   flex-direction: column;
 }
@@ -808,6 +804,10 @@ video {
 
 .gap-8 {
   gap: 2rem;
+}
+
+.whitespace-pre-line {
+  white-space: pre-line;
 }
 
 .border-2 {
@@ -846,6 +846,10 @@ video {
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.p-12 {
+  padding: 3rem;
 }
 
 .p-2 {
