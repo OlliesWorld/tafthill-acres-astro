@@ -1,4 +1,4 @@
-import '../../chunks/page-ssr_itDYPmsu.mjs';
+import '../../chunks/page-ssr_gXdURvie.mjs';
 import { c as createComponent, r as renderTemplate, a as addAttribute, b as renderHead, d as renderComponent, e as createAstro } from '../../chunks/astro/server_78IMylia.mjs';
 import 'kleur/colors';
 import 'html-escaper';

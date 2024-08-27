@@ -726,10 +726,6 @@ video {
   height: 2rem;
 }
 
-.h-\[350px\] {
-  height: 350px;
-}
-
 .h-\[585px\] {
   height: 585px;
 }
@@ -1098,6 +1094,10 @@ video {
 
   .lg\:h-1\/2 {
     height: 50%;
+  }
+
+  .lg\:h-\[350px\] {
+    height: 350px;
   }
 
   .lg\:w-1\/2 {

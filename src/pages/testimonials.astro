@@ -105,10 +105,10 @@ const result: Testimonial[] = response.data;
                     const name = item.names ? item.names[nameKey] : null;
 
                     return (
-                      <div class="flex gap-8 mb-8 justify-center">
+                      <div class="lg:flex gap-8 mb-8 justify-center">
                         {image && image.asset ? (
                           <img
-                            class=" h-[350px] object-contain"
+                            class=" lg:h-[350px] object-contain"
                             src={urlFor(image).url()}
                             alt={`Image for ${key}`}
                           />
