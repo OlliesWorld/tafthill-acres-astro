@@ -24,7 +24,7 @@ import tailwind from "@astrojs/tailwind";
 // https://astro.build/config
 export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
-  output: 'server',
+  output: 'hybrid',
   adapter: netlify(),
   integrations: [sanity({
     projectId,

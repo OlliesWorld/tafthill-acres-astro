@@ -26,6 +26,7 @@
     "astro-portabletext": "0.10.0",
     "autoprefixer": "10.4.19",
     "groq": "3.49.0",
+    "netlify-cli": "^17.34.2",
     "postcss-nesting": "12.1.5",
     "prettier-plugin-astro": "0.14.0",
     "react": "18.3.1",
