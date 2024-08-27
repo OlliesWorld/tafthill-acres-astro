@@ -1,19 +1,35 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import { getThankyous } from "../utils/sanity";
 import { urlFor } from "../utils/image";
+import { ImageAsset } from "@sanity/types";
+import { loadQuery } from "../../sanity/lib/load-query";
 
-export const prerender = true;
+interface Thanks {
+  slug: string;
+  title?: string;
+  subtitle?: string;
+  mainImage?: ImageAsset[];
+}
 
-const thanks = await getThankyous("thanks");
-const [thank] = thanks;
+  const response = await loadQuery<Thanks[]>({
+    query: `*[_type == 'thankyou'] | order(_createdAt desc) {
+      slug,
+      title,
+      subtitle,
+      mainImage
+      
+    }`
+  });
+
+
+  const result: Thanks[] = response.data;
 ---
 <Layout title="Thank you from Taft Hill Acres | Fort Collins Boarding Facility">
   <div class="flex text-center justify-center mt-32 lg:mt-0"> 
     <div class="w-full -mt-24 lg:mt-0 lg:w-1/2 lg:h-1/2  bg-tan p-8">
-      <h2 class="text-green text-5xl text-center mb-4">{thank.title}</h2>
-      <h3 class="text-darktan text-2xl">{thank.subtitle}</h3>
-      <img class="lg:w-1/2 mx-auto" src={urlFor(thank.mainImage).url()} alt={thank.mainImage} />
+      <h2 class="text-green text-5xl text-center mb-4">{result[0]?.title}</h2>
+      <h3 class="text-darktan text-2xl">{result[0]?.subtitle}</h3>
+      <img class="lg:w-1/2 mx-auto" src={urlFor((result[0]?.mainImage as any).asset).url()} alt={result[0]?.title} />
        </div>
       </div>
 </Layout>
