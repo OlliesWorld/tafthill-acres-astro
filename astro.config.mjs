@@ -1,6 +1,7 @@
 // Loading environment variables from .env files
 // https://docs.astro.build/en/guides/configuring-astro/#environment-variables
 import { loadEnv } from "vite";
+import vercel from "@astrojs/vercel/serverless";
 const {
   PUBLIC_SANITY_STUDIO_PROJECT_ID,
   PUBLIC_SANITY_STUDIO_DATASET,
@@ -17,7 +18,7 @@ import react from "@astrojs/react";
 
 // Change this depending on your hosting provider (Vercel, Netlify etc)
 // https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter
-import netlify from "@astrojs/netlify";
+// import netlify from "@astrojs/netlify";
 
 import tailwind from "@astrojs/tailwind";
 
@@ -25,7 +26,7 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
   output: 'hybrid',
-  adapter: netlify(),
+  adapter: vercel(),
   integrations: [sanity({
     projectId,
     dataset,
