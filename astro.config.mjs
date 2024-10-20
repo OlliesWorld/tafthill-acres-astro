@@ -1,5 +1,3 @@
-// Loading environment variables from .env files
-// https://docs.astro.build/en/guides/configuring-astro/#environment-variables
 import { loadEnv } from "vite";
 import vercel from "@astrojs/vercel/serverless";
 const {
