@@ -22,6 +22,7 @@ module.exports = {
 		  green: '#1b2911',
 		  tan: 'rgba(236,235,232,1)',
 		  darktan: 'rgba(145,96,51,1)',
+		  red: 'rgba(255,0,0,1)',
 		},
 		borderRadius: {
 		  'none': '0',

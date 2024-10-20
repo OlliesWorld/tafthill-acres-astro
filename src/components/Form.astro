@@ -1,21 +1,134 @@
-<div class="block p-6 max-w-md m-auto text-center my-4">
-  <div class="feedback-form">
-    <form id="contact-form" action="/api/form" method="POST" class="space-y-4">
-      <div>
-        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-        <input type="text" id="name" name="name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      </div>
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      </div>
-      <div>
-        <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-        <textarea id="message" name="message" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-      </div>
-      <div>
-        <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Send</button>
-      </div>
-    </form>
-  </div>
-</div>
+---
+const { formKey } = Astro.props;
+---
+
+<!-- // Styling Requires Tailwind CSS -->
+<form
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  id="form"
+  class="needs-validation"
+  data-astro-reload
+  novalidate
+>
+  <!-- Add your Web3Forms Access Key -->
+  <input type="hidden" name="access_key" value={formKey} />
+  <input type="hidden" name="email" value="rtinawood@gmail.com" />
+  <input type="hidden" name="subject" value="new submission in contact" />
+  <input type="checkbox" class="hidden" style="display:none" name="botcheck" />
+  <input type="hidden" name="form-name" value="contact" />
+  
+  <label class="hidden" for="name">Name</label>
+  <input
+    id="name"
+    type="text"
+    placeholder="name"
+    name="name"
+    class="p-2 mb-2 w-full text-black border-b-2 border-darktan active:bg-tan focus:outline-none focus:ring focus:ring-tan"
+  />
+  
+  <label class="hidden" for="email">Email</label>
+  <input
+    id="email"
+    type="email"
+    name="email"
+    placeholder="email"
+    required
+    class="p-2 mb-2 w-full text-black border-b-2 border-darktan active:bg-tan focus:outline-none focus:ring focus:ring-tan"
+  />
+  <div id="email-error" class="text-red font-bold"></div>
+  
+  <label class="hidden" for="message">Message</label>
+  <textarea
+    id="message"
+    wrap="soft"
+    name="message"
+    placeholder="message"
+    required
+    minlength="15"
+    class="w-full p-2 h-72 text-black border-2 border-darktan active:bg-tan focus:outline-none focus:ring focus:ring-tan"
+  ></textarea>
+  <div id="message-error" class="text-red font-bold"></div>
+  
+  <button
+    type="submit"
+    class="bg-darktan text-white p-2 mt-4 hover:bg-tan hover:text-black hover:border-darktan border-2"
+    >Submit</button
+  >
+  <div id="result" class="mt-3 text-center"></div>
+</form>
+
+<script is:inline>
+  document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      const form = document.getElementById("form");
+      const result = document.getElementById("result");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        form.classList.add("was-validated");
+
+        // Clear previous error messages
+        document.getElementById("email-error").innerHTML = "";
+        document.getElementById("message-error").innerHTML = "";
+
+        // Custom validation for email field
+        const email = form.querySelector("#email");
+        if (!email.checkValidity()) {
+          document.getElementById("email-error").innerHTML = "Please enter a valid email address.";
+          email.focus();
+          return;
+        }
+
+        // Custom validation for message length
+        const message = form.querySelector("#message");
+        if (message.value.length < 15) {
+          document.getElementById("message-error").innerHTML = "Message must be at least 15 characters long.";
+          message.focus();
+          return;
+        }
+
+        if (!form.checkValidity()) {
+          form.querySelectorAll(":invalid")[0].focus();
+          return;
+        }
+
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+
+        result.innerHTML = "Sending...";
+
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: json,
+        })
+          .then(async (response) => {
+            let json = await response.json();
+            if (response.status == 200) {
+              window.location.href = "/thanks";
+            } else {
+              console.log(response);
+              result.classList.add("text-red");
+              result.innerHTML = json.message;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            result.classList.add("text-red");
+            result.innerHTML = "Something went wrong!";
+          })
+          .finally(() => {
+            form.reset();
+            form.classList.remove("was-validated");
+          });
+      });
+    },
+    { once: true }
+  );
+</script>
