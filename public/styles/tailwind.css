@@ -670,6 +670,10 @@ video {
   margin-top: 0px;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .mt-12 {
   margin-top: 3rem;
 }
@@ -1002,10 +1006,6 @@ video {
 .text-green {
   --tw-text-opacity: 1;
   color: rgb(27 41 17 / var(--tw-text-opacity));
-}
-
-.text-red {
-  color: rgba(255,0,0,1);
 }
 
 .text-tan {
