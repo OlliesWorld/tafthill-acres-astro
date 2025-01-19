@@ -1,9 +1,11 @@
 ---
 import type { ImageAsset } from "@sanity/types";
 import Layout from "../layouts/Layout.astro";
+import Card from '../components/Card.astro';
 import { urlFor } from "../utils/image";
 import { loadQuery } from "../../sanity/lib/load-query";
 import { decodeHtmlEntities, cleanText } from "../utils/textUtils";
+
 
 interface Testimonial {
   slug: string;
@@ -73,63 +75,30 @@ const response = await loadQuery<Testimonial[]>({
     }
   }`,
 });
+// console.log(response.data[0]);
+const testimonials: Testimonial = response.data[0]; // Access the first testimonial object
 
-const result: Testimonial[] = response.data;
-// console.log('result', result);
+// Check if testimonials.quotes exists and is an object
+if (!testimonials.quotes || typeof testimonials.quotes !== 'object') {
+  console.error('No quotes found in testimonials');
+}
+const cardsData = Object.keys(testimonials.quotes).map((quoteKey) => {
+  const index = parseInt(quoteKey.replace('quote', '')) - 1; // Get the index from the quote key
+  return {
+    id: testimonials.slug || "unknown-id", // Use slug or a default id
+    text: testimonials.quotes[quoteKey] || "No quote available",
+    author: testimonials.names ? testimonials.names[`name${index + 1}`] || "Unknown" : "Unknown", // Match name with quote
+    image: testimonials.images && testimonials.images[`image${index + 1}`] ? urlFor(testimonials.images[`image${index + 1}`]).url() : "path/to/default/image.jpg" // Match image with quote
+  };
+});
 
-// console.log('testimonials', transformedTestimonials);
 ---
 
-<Layout title="Testimonials">
-  <div class="m-auto my-12 text-xl">
-    <div>
-      {
-        result.map((item: Testimonial) => (
-          <div class="mb-8">
-            <h2 class="text-darktan font-extrabold text-5xl text-center mb-8">
-              {item.title}
-            </h2>
-            <div class="m-auto text-center">
-              {item.quotes &&
-                Object.entries(item.quotes)
-                  .sort(([keyA], [keyB]) => {
-                    const numA = parseInt(keyA.replace("quote", ""), 10);
-                    const numB = parseInt(keyB.replace("quote", ""), 10);
-                    return numA - numB;
-                  })
-                  .slice(0, 14)
-                  .map(([key, quote]) => {
-                    const imageKey = key.replace("quote", "image");
-                    const nameKey = key.replace("quote", "name");
-                    const image = item.images ? item.images[imageKey] : null;
-                    const name = item.names ? item.names[nameKey] : null;
-
-                    return (
-                      <div class="lg:flex gap-8 mb-8 justify-center">
-                        {image && image.asset ? (
-                          <img
-                            class=" lg:h-[350px] object-contain"
-                            src={urlFor(image).url()}
-                            alt={`Image for ${key}`}
-                          />
-                        ) : (
-                          <p>No image available for {key}</p>
-                        )}
-                        <div class="lg:w-2/5 bg-tan my-auto p-12">
-                          <p class="text-darktan text-2xl font-extrabold">
-                            {decodeHtmlEntities(cleanText(quote))}
-                          </p>
-                          <p class="text-darktan text-2xl font-extrabold">
-                            {name}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-            </div>
-          </div>
-        ))
-      }
-    </div>
+<Layout title="Testimonials | Taft Hill Acres">
+  <div class="container mx-auto mt-8">
+    <h1 class="text-darktan text-5xl text-center my-8 font-extrabold">What Our Clients Say</h1>
+    <div class="mt-40">
+     <Card cards={cardsData} />
+  </div>
   </div>
 </Layout>

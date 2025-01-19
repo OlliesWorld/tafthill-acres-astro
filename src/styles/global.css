@@ -119,12 +119,15 @@ width: 80%;
 .nav-links {
   z-index: 1000;
   position: fixed;
-  padding: 32px 0px 32px 15px;
+  /* padding: 32px 0px 32px 15px; */
   top: 0;
   left: 0;
-  background-color: rgba(236,235,232, 0.9);
-    display: none;
-    margin: 0;
+  background-color: rgba(236,235,232, 1);
+  display: none;
+  margin: 0;
+  @media screen and (max-width: 636px) {
+    border-bottom: 2px solid rgba(145,96,51,1); 
+  }
   }
   
   .nav-links a {
@@ -154,6 +157,7 @@ width: 80%;
       display: block;
       position: static;
       width: auto;
+      
       background: none;
     }
   
@@ -200,7 +204,7 @@ width: 80%;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-   
+    padding-top: 10px;
   }
   .hamRotate.active {
     transform: rotate(45deg);
