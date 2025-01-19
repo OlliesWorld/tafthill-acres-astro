@@ -1,40 +1,51 @@
 import { loadEnv } from "vite";
-import vercel from "@astrojs/vercel/serverless";
 const {
   PUBLIC_SANITY_STUDIO_PROJECT_ID,
   PUBLIC_SANITY_STUDIO_DATASET,
-  PUBLIC_SANITY_PROJECT_ID,
-  PUBLIC_SANITY_DATASET
-} = loadEnv(import.meta.env.MODE, process.cwd(), "");
+  PUBLIC_SANITY_STUDIO_API_VERSION,
+} = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+
 import { defineConfig } from "astro/config";
-
-// Different environments use different variables
-const projectId = PUBLIC_SANITY_STUDIO_PROJECT_ID || PUBLIC_SANITY_PROJECT_ID;
-const dataset = PUBLIC_SANITY_STUDIO_DATASET || PUBLIC_SANITY_DATASET;
-import sanity from "@sanity/astro";
 import react from "@astrojs/react";
-
-// Change this depending on your hosting provider (Vercel, Netlify etc)
-// https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter
-// import netlify from "@astrojs/netlify";
-
 import tailwind from "@astrojs/tailwind";
+import sanity from "@sanity/astro";
+import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
 export default defineConfig({
-  // Hybrid+adapter is required to support embedded Sanity Studio
-  output: 'hybrid',
-  adapter: vercel(),
-  integrations: [sanity({
-    projectId,
-    dataset,
-    useCdn: false,
-    // `false` if you want to ensure fresh data
-    apiVersion: "2024-07-24", // Set to date of setup to use the latest API version
-    studioBasePath: '/studio',
-    stega: {
-      studioUrl: "/studio",
-    },
-  }), react() // Required for Sanity Studio
-  , tailwind()]
+  output: 'static',
+  integrations: [
+    netlify(),
+    react(),
+    tailwind(),
+    sanity({
+      projectId: PUBLIC_SANITY_STUDIO_PROJECT_ID,
+      dataset: PUBLIC_SANITY_STUDIO_DATASET,
+      apiVersion:  "2024-07-24",
+      studioBasePath: '/admin',
+      prerender: true,
+      useCdn: true
+    })
+  ],
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'sanity-studio': [
+              '@sanity/vision',
+              '@sanity/desk-tool',
+              '@sanity/studio-hints'
+            ],
+            'sanity-core': [
+              '@sanity/client',
+              '@sanity/preview-kit',
+              '@sanity/image-url'
+            ]
+          }
+        }
+      }
+    }
+  }
 });

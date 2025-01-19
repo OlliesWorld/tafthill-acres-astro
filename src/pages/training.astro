@@ -57,7 +57,9 @@ const trainingDescription: TrainerDescription | null = trainingDescriptionResult
 ---
 
 <Layout title="Training at Taft Hill Acres | Fort Collins Boarding Facility">
-  <section class="flex flex-col lg:flex-row lg:justify-center mx-auto text-center  my-6">  
+<div class="container mx-auto">
+  <h1 class="text-darktan text-5xl text-center my-8 font-extrabold uppercase">Our Trainers</h1>
+  <section class="lg:w-3/4 flex flex-col lg:flex-row lg:justify-center mx-auto text-center  my-6">  
     {
       trainer && typeof trainer === 'object' && 
         Object.values(trainer).map((item: { trainer: string }) => {
@@ -75,22 +77,22 @@ const trainingDescription: TrainerDescription | null = trainingDescriptionResult
         })
     }
   </section>
-  <section class="lg:w-1/2 text-center m-auto mb-16">
-    
+  <section class="lg:w-3/4 m-auto mb-16"> 
 {trainingDescription && (
   <>
-    <h4 class="bg-darktan text-tan text-4xl px-4 py-8">
+    <h4 class="bg-darktan text-center text-tan text-4xl px-4 py-8">
       {trainingDescription.description}
     </h4>
     {trainingDescription.mainImage && (
       <img
-        class="m-auto"
+        class="object-cover w-full m-auto"
         src={urlFor((trainingDescription.mainImage as any).asset).url()}
         alt="Horse and rider in the arena"
       />
     )}
   </>
 )}
+
   </section>
   {  trainer && typeof trainer === 'object' && (
     trainer
@@ -105,7 +107,7 @@ const trainingDescription: TrainerDescription | null = trainingDescriptionResult
         }) => (
           <section
             id={`${item.trainer.replace(/[^\x20-\x7E]/g, "").toLowerCase().replace(/ /g, "-")}`}
-            class="m-auto text-center lg:w-1/2 mb-16"
+            class="lg:w-3/4 m-auto text-center mb-16"
           >
             <div class="bg-darktan p-4">
               <h3 class="text-white mb-4 md:text-2xl text-left">
@@ -128,4 +130,5 @@ const trainingDescription: TrainerDescription | null = trainingDescriptionResult
       )
         )
   }
+  </div>
 </Layout>

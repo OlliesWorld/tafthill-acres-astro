@@ -44,10 +44,10 @@ const facilities: Facility[] = result ? result.data.map(facility => ({
 ---
 
 <Layout title="Facility">
-  <div class="m-auto text-center">
+  <div class="container mx-auto mt-8">
     {facilities.map((facility) => (
       <div>
-        <h3 class="text-darktan text-5xl text-center my-8 font-extrabold">{cleanText(facility.title)}</h3>
+        <h1 class="text-darktan text-5xl text-center my-8 font-extrabold">{cleanText(facility.title)}</h1>
         <img class="z-10 object-cover w-full lg:w-3/4 m-auto" src={urlFor(facility.mainImage).url()} alt={`${cleanText(facility.title)}`} />
         {[facility.article, facility.article2, facility.article3, facility.article4].map((content, idx) => {
           const imageKey = `mainImage${idx + 2}` as keyof Facility;

@@ -1,143 +1,25 @@
----
-const formKey = import.meta.env.PUBLIC_FORM_KEY;
----
-
-<form
-  action="https://api.web3forms.com/submit"
-  method="POST"
-  id="form"
-  class="needs-validation"
-  data-astro-reload
-  novalidate>
-  
-  <input type="hidden" name="access_key" value={formKey} />
-  <input type="hidden" name="email" value="rtlockwoodwork@gmail.com" />
-  <input type="hidden" name="subject" value="new submission in contact" />
-  <input type="checkbox" class="hidden" style="display:none" name="botcheck" />
-  <input type="hidden" name="form-name" value="contact" />
-  
-  <label class="hidden" for="name">Name</label>
-  <input
-    id="name"
-    type="text"
-    placeholder="name"
-    name="name"
-    required
-    class="p-2 mb-2 w-full text-black border-b-2 border-darktan active:bg-tan focus:outline-none focus:ring focus:ring-tan"
-  />
-  <div class="empty-feedback text-red-400 text-sm mt-1">
-    Please provide your name.
+<div class="block p-6 max-w-md m-auto text-center my-4">
+  <div class="feedback-form">
+    <form
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      name="contact"
+      method="POST"
+      action="/thanks"
+    >
+      <p class="hidden">
+        <label>
+          Don't fill this out if you're human: <input name="bot-field" />
+        </label>
+      </p>
+      <input type="hidden" name="form-name" value="contact" />
+      <label class="hidden" for="name">Name</label>
+      <input id="name" type="text" placeholder="name" name="name" class='p-2 mb-2 w-full text-black border-b-2 border-darktan active:bg-tan focus:outline-none focus:ring focus:ring-tan' />
+      <label class="hidden" for="email">Email</label>
+      <input id="email" type="email" name="email" placeholder="email" required class='p-2 mb-2 w-full text-black border-b-2 border-darktan active:bg-tan focus:outline-none focus:ring focus:ring-tan' />
+      <label class="hidden" for="message">Message</label>
+      <textarea id="message" wrap="soft" name="message" placeholder="message" required class='w-full p-2 h-72 text-black border-2 border-darktan active:bg-tan focus:outline-none focus:ring focus:ring-tan'></textarea>
+      <button type="submit" class='bg-darktan text-white p-2 mt-4 hover:bg-tan hover:text-black hover:border-darktan border-2'>Submit</button>
+    </form>
   </div>
-  
-  <label class="hidden" for="email">Email</label>
-  <input
-    id="email"
-    type="email"
-    name="email"
-    placeholder="email"
-    required
-    class="p-2 mb-2 w-full text-black border-b-2 border-darktan active:bg-tan focus:outline-none focus:ring focus:ring-tan"
-  />
-  <div class="empty-feedback text-red-400 text-sm mt-1">
-    Please provide your email.
-  </div>
-  <div class="invalid-feedback text-red-400 text-sm mt-1">
-    Please provide a valid email address.
-  </div>
-  
-  <label class="hidden" for="message">Message</label>
-  <textarea
-    id="message"
-    name="message"
-    placeholder="message"
-    required
-    minlength="15"
-    class="w-full p-2 h-72 text-black border-2 border-darktan active:bg-tan focus:outline-none focus:ring focus:ring-tan"
-  ></textarea>
-  <div class="empty-feedback text-red-400 text-sm mt-1">
-    Please enter your message.
-  </div>
-  
-  <button
-    type="submit"
-    class="bg-darktan text-white p-2 mt-4 hover:bg-tan hover:text-black hover:border-darktan border-2"
-    >Submit</button>
-  <div id="result" class="mt-3 text-center"></div>
-</form>
-
-<style>
-  .invalid-feedback,
-  .empty-feedback {
-    display: none;
-  }
-
-  .was-validated :placeholder-shown:invalid ~ .empty-feedback {
-    display: block;
-  }
-
-  .was-validated :not(:placeholder-shown):invalid ~ .invalid-feedback {
-    display: block;
-  }
-
-  .is-invalid,
-  .was-validated :invalid {
-    border-color: #dc3545;
-  }
-</style>
-
-<script is:inline>
-  document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-      const form = document.getElementById("form");
-      const result = document.getElementById("result");
-
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        form.classList.add("was-validated");
-        if (!form.checkValidity()) {
-          form.querySelectorAll(":invalid")[0].focus();
-          return;
-        }
-        const formData = new FormData(form);
-        const object = Object.fromEntries(formData);
-        const json = JSON.stringify(object);
-
-        result.innerHTML = "Sending...";
-
-        fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: json,
-        })
-          .then(async (response) => {
-            let json = await response.json();
-            if (response.status == 200) {
-              result.classList.add("text-green-500");
-              result.innerHTML = "Success!";
-              // Use history.pushState for smoother client-side navigation
-              history.pushState({}, "", "/thanks");
-              // Dispatch a new popstate event to trigger Astro's client router
-              window.dispatchEvent(new PopStateEvent("popstate"));
-            } else {
-              console.log(response);
-              result.classList.add("text-red-500");
-              result.innerHTML = json.message;
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            result.innerHTML = "Something went wrong!";
-          })
-          .then(function () {
-            form.reset();
-            form.classList.remove("was-validated");
-          });
-      });
-    },
-    { once: true }
-  );
-</script>
+</div>
