@@ -32,16 +32,7 @@ module.exports = {
 		  'md': '0.375rem',
 	
 		  'lg': '5.5rem',
-		},
-		keyframes: {
-			flashFade: {
-			  '0%': { opacity: '0.9', transform: 'scale(1)' },
-			  '100%': { opacity: '0', transform: 'scale(1.15)' }
-			}
-		  },
-		  animation: {
-			flashFade: 'flashFade 250ms ease-out forwards'
-		  }
+		}
 	  },
 	plugins: [
 		function ({ addUtilities }) {

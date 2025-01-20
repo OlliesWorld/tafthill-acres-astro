@@ -2,7 +2,6 @@ import { loadEnv } from "vite";
 const {
   PUBLIC_SANITY_STUDIO_PROJECT_ID,
   PUBLIC_SANITY_STUDIO_DATASET,
-  PUBLIC_SANITY_STUDIO_API_VERSION,
 } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
 import { defineConfig } from "astro/config";

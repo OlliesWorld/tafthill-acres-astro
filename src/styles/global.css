@@ -185,7 +185,7 @@ width: 80%;
     width: 55px;
     z-index: 1005;
     position: fixed;
-    right: 25px;
+    right: 45px;
     top: -5px;
   }
   
@@ -204,7 +204,8 @@ width: 80%;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    padding-top: 10px;
+    padding-top: 38px;
+  
   }
   .hamRotate.active {
     transform: rotate(45deg);
@@ -240,4 +241,78 @@ width: 80%;
   .ham3.active .bottom {
     stroke-dasharray: 110 205;
     stroke-dashoffset: -86px;
-  } 
+  }
+
+.card {
+  @apply relative h-[200px] w-[180px] -mx-6;
+  transition: z-index 0ms step-end;
+}
+
+.card-face {
+  @apply absolute bottom-0 left-0 right-0 top-0 overflow-hidden rounded-lg;
+  background: linear-gradient(-135deg, 
+    hsl(var(--card-hue), 100%, 80%),
+    hsl(var(--card-hue), 90%, 45%)
+  );
+  box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.15),
+              inset 0 0 0 2px hsla(var(--card-hue), 100%, 80%, 0.75);
+  transform: translateY(var(--card-offset)) rotate(var(--card-rotation));
+  transition: transform 800ms cubic-bezier(0.19, 1, 0.22, 1);
+  border-radius: 0px;
+}
+
+.card-content {
+  @apply p-4 text-white opacity-0;
+  transition: opacity 300ms ease-in-out;
+}
+
+.card.active .card-content {
+  opacity: 1;
+  position: absolute;
+  top: -3%;
+}
+
+.card.active img {
+  opacity: 0.7;
+}
+
+.card.active {
+  z-index: 50;
+  transition: z-index 0ms step-start;
+}
+
+.card.active .card-face {
+  transform: translateY(-100px) rotate(0deg) scale(2);
+  width: 300px;
+  @media (max-width: 640px) {
+    max-width: 50vw;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .card.active .card-content {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+}
+
+.card-face::after {
+  content: '';
+  @apply absolute inset-0 bg-white opacity-0;
+}
+
+.card.active .card-face::after {
+  animation: flashFade 250ms ease-out forwards;
+}
+
+@keyframes flashFade {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}

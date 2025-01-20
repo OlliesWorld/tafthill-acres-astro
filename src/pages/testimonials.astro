@@ -6,7 +6,6 @@ import { urlFor } from "../utils/image";
 import { loadQuery } from "../../sanity/lib/load-query";
 import { decodeHtmlEntities, cleanText } from "../utils/textUtils";
 
-
 interface Testimonial {
   slug: string;
   title?: string;
@@ -75,30 +74,33 @@ const response = await loadQuery<Testimonial[]>({
     }
   }`,
 });
-// console.log(response.data[0]);
+
 const testimonials: Testimonial = response.data[0]; // Access the first testimonial object
 
 // Check if testimonials.quotes exists and is an object
 if (!testimonials.quotes || typeof testimonials.quotes !== 'object') {
   console.error('No quotes found in testimonials');
 }
-const cardsData = Object.keys(testimonials.quotes).map((quoteKey) => {
-  const index = parseInt(quoteKey.replace('quote', '')) - 1; // Get the index from the quote key
-  return {
-    id: testimonials.slug || "unknown-id", // Use slug or a default id
-    text: testimonials.quotes[quoteKey] || "No quote available",
-    author: testimonials.names ? testimonials.names[`name${index + 1}`] || "Unknown" : "Unknown", // Match name with quote
-    image: testimonials.images && testimonials.images[`image${index + 1}`] ? urlFor(testimonials.images[`image${index + 1}`]).url() : "path/to/default/image.jpg" // Match image with quote
-  };
-});
+
+const cardsData = testimonials.quotes && typeof testimonials.quotes === 'object' ? Object.keys(testimonials.quotes)
+  .filter((quoteKey) => testimonials.quotes && testimonials.quotes[quoteKey]) // Filter out empty quotes
+  .map((quoteKey) => {
+    const index = parseInt(quoteKey.replace('quote', '')) - 1; // Get the index from the quote key
+    return {
+      id: testimonials.slug || "unknown-id", // Use slug or a default id
+      text: testimonials.quotes ? testimonials.quotes[quoteKey] || "No quote available" : "No quote available",
+      author: testimonials.names ? testimonials.names[`name${index + 1}`] || "Unknown" : "Unknown", // Match name with quote
+      image: testimonials.images && testimonials.images[`image${index + 1}`] ? urlFor(testimonials.images[`image${index + 1}`]).url() : "path/to/default/image.jpg" // Match image with quote
+    };
+  }) : [];
 
 ---
 
 <Layout title="Testimonials | Taft Hill Acres">
   <div class="container mx-auto mt-8">
     <h1 class="text-darktan text-5xl text-center my-8 font-extrabold">What Our Clients Say</h1>
-    <div class="mt-40">
-     <Card cards={cardsData} />
-  </div>
+    <div class="mt-36">
+      <Card cards={cardsData} />
+    </div>
   </div>
 </Layout>
