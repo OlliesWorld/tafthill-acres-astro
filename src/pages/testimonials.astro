@@ -1,7 +1,8 @@
 ---
 import type { ImageAsset } from "@sanity/types";
 import Layout from "../layouts/Layout.astro";
-import Card from '../components/Card.astro';
+// import Card from '../components/Card.astro';
+import Slider from "../components/Slider.astro";
 import { urlFor } from "../utils/image";
 import { loadQuery } from "../../sanity/lib/load-query";
 import { decodeHtmlEntities, cleanText } from "../utils/textUtils";
@@ -99,8 +100,8 @@ const cardsData = testimonials.quotes && typeof testimonials.quotes === 'object'
 <Layout title="Testimonials | Taft Hill Acres">
   <div class="container mx-auto mt-8">
     <h1 class="text-darktan text-5xl text-center my-8 font-extrabold">What Our Clients Say</h1>
-    <div class="mt-36">
-      <Card cards={cardsData} />
+    <div class="mt-42">
+      <Slider {cardsData} />
     </div>
   </div>
 </Layout>

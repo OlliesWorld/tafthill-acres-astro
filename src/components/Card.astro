@@ -47,11 +47,32 @@ const { cards } = Astro.props;
 </div>
 
 <style>
+  .card-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 350px;
+    padding: 0 50px;
+  }
+
   .card {
     transition: transform 0.5s ease-in-out;
   }
+
   .card.active {
     z-index: 10;
+  }
+
+  @media (max-width: 768px) {
+    .card-container {
+      flex-direction: column;
+      height: auto;
+      padding: 0;
+    }
+
+    .card {
+      margin-bottom: 20px;
+    }
   }
 </style>
 
