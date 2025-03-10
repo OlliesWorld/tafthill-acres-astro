@@ -209,12 +209,12 @@ const { cardsData } = Astro.props;
     .arrow-top:after,
     .arrow-bottom:after {
         background-color: #1b2911;
-        content: '';
+        content: "";
         height: 100%;
         position: absolute;
         top: 0;
         transition: all 0.15s;
-        box-shadow: ;
+        box-shadow:;
     }
     .arrow-top {
         transform: rotate(45deg);
@@ -241,67 +241,67 @@ const { cardsData } = Astro.props;
     .arrow:hover .arrow-top:after {
         left: 0;
         transition-delay: 0.15s;
-        box-shadow: 0 4px 8px rgba(242,235,235,0.75); /* Add box shadow on hover */
+        box-shadow: 0 4px 8px rgba(242, 235, 235, 0.75); /* Add box shadow on hover */
     }
 
     .arrow:hover .arrow-bottom:after {
         right: 0;
         transition-delay: 0s;
-        box-shadow: 0 4px 8px rgba(242,235,235,0.75);
+        box-shadow: 0 4px 8px rgba(242, 235, 235, 0.75);
     }
 
     .arrow:active {
         /* transform: translateY(-50%) scale(0.9); */
     }
- 
 </style>
-
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const initializeSlider = () => {
-            console.log("initializeSlider function called");
+    function initializeSlider() {
+        // console.log("initializeSlider function called");
 
-            const next = document.querySelector(".next");
-            const prev = document.querySelector(".prev");
+        const next = document.querySelector(".next");
+        const prev = document.querySelector(".prev");
+        const items = document.querySelectorAll(".item");
 
-            console.log("Next button:", next);
-            console.log("Prev button:", prev);
+        // console.log("Next button:", next);
+        // console.log("Prev button:", prev);
 
-            if (next && prev) {
-                next.addEventListener("click", function () {
-                    console.log("Next button clicked");
-                    const items = document.querySelectorAll(".item");
-                    const slide = document.querySelector(".slide");
-                    if (slide) {
-                        slide.appendChild(items[0]);
-                        updateActiveSlide();
-                    }
-                });
-
-                prev.addEventListener("click", function () {
-                    console.log("Prev button clicked");
-                    const items = document.querySelectorAll(".item");
-                    const slide = document.querySelector(".slide");
-                    if (slide) {
-                        slide.prepend(items[items.length - 1]);
-                        updateActiveSlide();
-                    }
-                });
-            }
-        };
-
-        const updateActiveSlide = () => {
-            const items = document.querySelectorAll(".item");
-            items.forEach((item, index) => {
-                if (index === 1) {
-                    item.classList.add("active");
-                } else {
-                    item.classList.remove("active");
+        if (next && prev) {
+            next.addEventListener("click", function () {
+                console.log("Next button clicked");
+                const items = document.querySelectorAll(".item");
+                const slide = document.querySelector(".slide");
+                if (slide) {
+                    slide.appendChild(items[0]);
+                    updateActiveSlide();
                 }
             });
-        };
 
-        initializeSlider();
+            prev.addEventListener("click", function () {
+                console.log("Prev button clicked");
+                const items = document.querySelectorAll(".item");
+                const slide = document.querySelector(".slide");
+                if (slide) {
+                    slide.prepend(items[items.length - 1]);
+                    updateActiveSlide();
+                }
+            });
+        }
+
+        // Initialize the active slide on load
         updateActiveSlide();
-    });
+    }
+
+    function updateActiveSlide() {
+        const items = document.querySelectorAll(".item");
+        items.forEach((item, index) => {
+            if (index === 1) {
+                item.classList.add("active");
+            } else {
+                item.classList.remove("active");
+            }
+        });
+    }
+
+    // Run on both initial load and subsequent navigations
+    document.addEventListener("astro:page-load", initializeSlider);
 </script>
