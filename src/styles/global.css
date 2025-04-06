@@ -147,8 +147,10 @@ width: 80%;
   }
   
   .expanded {
-    display: flex;
-    flex-wrap: wrap;
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding-top: 50px;
+    /* flex-wrap: wrap; */
   }
   
   @media screen and (min-width: 636px) {
@@ -163,7 +165,7 @@ width: 80%;
   
     .nav-links a {
       display: inline-block;
-      padding: 15px 20px;
+      padding: 10px;
     }
     .hamburger {
       display: none;
@@ -182,21 +184,23 @@ width: 80%;
   }
   .hamburger {
     cursor: pointer;
-    width: 55px;
+    width: 45px;
+
     z-index: 1005;
     position: fixed;
-    right: 45px;
+    right: 25px;
     top: -5px;
   }
   
-  .hamburger .line {
+  /* .hamburger .line {
     display: block;
     width: 40px;
     height: 5px;
     margin-bottom: 10px;
     background-color: #616161;
-  }
+  } */
   .ham {
+    height: 60px !important;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     transition: transform 400ms;
@@ -204,12 +208,10 @@ width: 80%;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    padding-top: 38px;
-  
+    /* padding-top: 38px; */
+  background-color: rgba(145,96,51,1);
   }
-  .hamRotate.active {
-    transform: rotate(45deg);
-  }
+
   .hamRotate180.active {
     transform: rotate(180deg);
   }
