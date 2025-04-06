@@ -20,7 +20,7 @@ export default defineConfig({
     sanity({
       projectId: PUBLIC_SANITY_STUDIO_PROJECT_ID,
       dataset: PUBLIC_SANITY_STUDIO_DATASET,
-      apiVersion:  "2024-07-24",
+      apiVersion:  "2024-01-24",
       studioBasePath: '/admin',
       prerender: true,
       useCdn: true
