@@ -2,8 +2,8 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   define: {
-    'process.env.VITE_PUBLIC_SANITY_STUDIO_PROJECT_ID': JSON.stringify(process.env.VITE_PUBLIC_SANITY_STUDIO_PROJECT_ID),
-    'process.env.VITE_PUBLIC_SANITY_STUDIO_DATASET': JSON.stringify(process.env.VITE_PUBLIC_SANITY_STUDIO_DATASET),
+    'process.env.PUBLIC_SANITY_STUDIO_PROJECT_ID': JSON.stringify(process.env.PUBLIC_SANITY_STUDIO_PROJECT_ID),
+    'process.env.PUBLIC_SANITY_STUDIO_DATASET': JSON.stringify(process.env.PUBLIC_SANITY_STUDIO_DATASET),
   },
   build: {
     chunkSizeWarningLimit: 1000, // Increase the warning limit to 1000kB

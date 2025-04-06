@@ -4,9 +4,9 @@ import { createClient } from "@sanity/client";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 const client = createClient({
-  projectId: import.meta.env.VITE_PUBLIC_SANITY_STUDIO_PROJECT_ID,
+  projectId: import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID,
   dataset: "production",
-  apiVersion: '2024-01-24',
+  apiVersion: '2021-03-25',
   useCdn: true,
 });
 
