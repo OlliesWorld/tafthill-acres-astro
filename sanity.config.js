@@ -12,15 +12,56 @@ import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schema";
 import { structureTool } from "sanity/structure";
 import { presentationTool } from "sanity/presentation";
+
 export default defineConfig({
-    name: "project-name",
-    title: "Project Name",
-    projectId,
-    dataset,
-    plugins: [ structureTool(), visionTool(), presentationTool({
-        previewUrl: location.origin,
-      })],
-    schema: {
-        types: schemaTypes,
-    },
+  name: "project-name",
+  title: "Project Name",
+  projectId: projectId,
+  dataset: dataset,
+  plugins: [
+    structureTool(),
+    visionTool(),
+    presentationTool({
+      previewUrl: {
+        draftMode: {
+          enable: "/api/draft",
+        },
+      },
+      locate: (document) => {
+        if (!document._id) {
+          return null;
+        }
+        
+        // Custom routing based on document type
+        if (document._type === 'home') {
+          return {
+            pathname: '/'
+          };
+        }
+        
+        if (document._type === 'about') {
+          return {
+            pathname: '/about'
+          };
+        }
+        
+        if (document._type === 'facility') {
+          return {
+            pathname: '/facility'
+          };
+        }
+        
+        if (document._type === 'training') {
+          return {
+            pathname: '/training'
+          };
+        }
+        
+        return null;
+      }
+    }),
+  ],
+  schema: {
+    types: schemaTypes,
+  },
 });

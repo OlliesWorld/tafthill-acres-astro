@@ -18,7 +18,8 @@ export async function loadQuery<QueryResponse>({
     )
   }
 
-  const perspective = visualEditingEnabled ? 'previewDrafts' : 'published'
+  // Updated from 'previewDrafts' to 'drafts' per deprecation warning
+  const perspective = visualEditingEnabled ? 'drafts' : 'published'
 
   const {result, resultSourceMap} = await sanityClient.fetch<QueryResponse>(query, params ?? {}, {
     filterResponse: false,

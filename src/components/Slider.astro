@@ -22,7 +22,7 @@ const { cardsData } = Astro.props;
                         class="item"
                         style={`background-image: url(${card.image});`}
                     >
-                        <div class="content bg-black p-4">
+                        <div class="content bg-black lg:p-4">
                             <div class="des">{card.text}</div>
                             <div class="name ">~ {card.author}</div>
                         </div>
@@ -49,10 +49,10 @@ const { cardsData } = Astro.props;
 </div>
 
 <style>
-    /* Your existing CSS styles */
     .container {
         margin: 0 auto;
-        width: 1000px;
+        width: 100%;
+        max-width: 1000px;
         height: 600px;
         background: #f5f5f5;
         box-shadow: 0 30px 50px #dbdbdb;
@@ -62,6 +62,8 @@ const { cardsData } = Astro.props;
         transform: none;
     }
 
+
+   
     .container .slide .item {
         width: 200px;
         height: 300px;
@@ -112,21 +114,26 @@ const { cardsData } = Astro.props;
 
     .item .content {
         position: absolute;
-        top: 50%;
-        left: 100px;
-        width: 300px;
+        top: 10%;
+        left: 50px;
+        width: 80%;
+        max-width: 300px;
         text-align: left;
         color: #eee;
         transform: translate(0, -50%);
         font-family: system-ui;
         display: none;
         background-color: rgba(0, 0, 0, 0.5);
+        padding: 10px;
     }
-
+   
     .slide .item.active .content {
         display: block;
     }
+   
+   
 
+   
     .content .name {
         font-size: 40px;
         text-transform: uppercase;
@@ -252,6 +259,71 @@ const { cardsData } = Astro.props;
 
     .arrow:active {
         /* transform: translateY(-50%) scale(0.9); */
+    }
+    @media (max-width: 480px) {
+        .container {
+            height: 300px;
+        }
+        .button {
+            background-color: rgba(145,96,51,1);
+        }
+    }
+    @media (max-width: 768px) {
+        .container {
+            height: 400px;
+        }
+
+        /* Similar mobile treatment but for tablets */
+        .container .slide .item {
+            /* display: none; Hide all items by default */
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: none;
+        }
+
+        .container .slide .item.active {
+            display: block;
+            position: relative;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Hide all non-active slides properly */
+        .slide .item:not(.active) {
+            display: none;
+        }
+
+        /* Position content for tablet */
+        .item .content {
+            left: 20px;
+            width: 90%;
+            max-width: 350px;
+            position: absolute;
+            top: 170px;
+            /* bottom: 80px; */
+            z-index: 10;
+            height: fit-content;
+        }
+
+        /* Ensure buttons are positioned correctly */
+        .button {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .content .name {
+            font-size: 24px;
+        }
+
+        .content .des {
+            font-size: 14px;
+        }
     }
 </style>
 <script>
