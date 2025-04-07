@@ -14,6 +14,12 @@ module.exports = {
 			translate: {
 			  '2': '0.5rem',
 			},
+			transformStyle: {
+				'preserve-3d': 'preserve-3d',
+			  },
+			  backfaceVisibility: {
+				'hidden': 'hidden',
+			  },
 		  },
 		colors: {
 		  transparent: 'transparent',
@@ -37,6 +43,18 @@ module.exports = {
 	plugins: [
 		function ({ addUtilities }) {
 			addUtilities({
+				'.transform-style-preserve-3d': {
+					'transform-style': 'preserve-3d',
+				  },
+				  '.backface-hidden': {
+					'backface-visibility': 'hidden',
+				  },
+				  '.rotate-x-180': {
+					'transform': 'rotateX(180deg)',
+				  },
+				  '.perspective-1000': {
+					'perspective': '1000px',
+				  },
 			  '.text-shadow-custom': {
 				textShadow: '1px 1px 1px #00593E, 2px 2px 1px #00593E, 3px 3px 1px #00593E, 4px 4px 1px #00593E, 5px 5px 1px #00593E, 6px 6px 1px #00593E, 7px 7px 1px #00593E, 8px 8px 1px #00593E, 25px 25px 8px rgba(0,0,0, 0.2)',
 			  },
