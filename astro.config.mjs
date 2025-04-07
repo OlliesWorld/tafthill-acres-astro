@@ -43,6 +43,8 @@ export default defineConfig({
       }
     })
   ],
-
+  image: {
+    domains: ['cdn.sanity.io'], // Add the domain of your remote images
+  },
   adapter: netlify()
 });
