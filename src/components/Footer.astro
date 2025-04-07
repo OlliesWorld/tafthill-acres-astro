@@ -70,13 +70,13 @@
     </div>
   </div>
 
-  <div class="pl-4 lg:pl-60 bg-tan">
-    <p class="text-xs pt-2 m-0">
+  <div class=" bg-tan text-center py-4">
+    <p class="text-sm pt-2 m-0">
       &copy; {new Date().getFullYear()} Taft Hill Acres
     </p>
     <p class="mt-0 text-sm">
       Made with <span role="img">💙</span> by
-      <a href="https://roni.rocks/" target="/">
+      <a class="footer-link-roni" href="https://roni.rocks/" target="/">
         {" "}
         Roni
       </a>
@@ -147,5 +147,9 @@
   .contact-btn span::after {
     background-color: #1b2911; /* green color */
     color: white;
+  }
+  .footer-link-roni:hover {
+    color: oklch(48.8% 0.243 264.376); 
+    font-weight: 700;
   }
 </style>

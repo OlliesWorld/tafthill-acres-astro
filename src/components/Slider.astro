@@ -62,8 +62,6 @@ const { cardsData } = Astro.props;
         transform: none;
     }
 
-
-   
     .container .slide .item {
         width: 200px;
         height: 300px;
@@ -126,14 +124,11 @@ const { cardsData } = Astro.props;
         background-color: rgba(0, 0, 0, 0.5);
         padding: 10px;
     }
-   
+
     .slide .item.active .content {
         display: block;
     }
-   
-   
 
-   
     .content .name {
         font-size: 40px;
         text-transform: uppercase;
@@ -265,7 +260,8 @@ const { cardsData } = Astro.props;
             height: 300px;
         }
         .button {
-            background-color: rgba(145,96,51,1);
+            background-color: rgba(145, 96, 51, 1);
+            bottom: 10px;
         }
     }
     @media (max-width: 768px) {
@@ -311,7 +307,7 @@ const { cardsData } = Astro.props;
         /* Ensure buttons are positioned correctly */
         .button {
             position: absolute;
-            bottom: 10px;
+            bottom: 0px;
             width: 100%;
             text-align: center;
             z-index: 10;

@@ -126,8 +126,8 @@ const about =
     <div class="lg:columns-3 sm:columns-2 gap-4">
       {
         about.gallery.map((item) => (
-          <div class="py-2 px-1 inline-block w-full group hover:scale-105 transition-transform duration-300">
-            <img src={urlFor(item).url()} alt={item.alt || ""} loading="lazy" class="hover:-skew-x-12 transition-transform duration-300 hover:rounded-md"/>
+          <div class="py-2 px-1 inline-block w-full group lg:hover:scale-105 transition-transform duration-300">
+            <img src={urlFor(item).url()} alt={item.alt || ""} loading="lazy" class="lg:hover:-skew-x-12 transition-transform duration-300 lg:hover:rounded-md"/>
           </div>
         ))
       }
