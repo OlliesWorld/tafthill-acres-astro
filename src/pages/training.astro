@@ -1,13 +1,23 @@
 ---
+import Image from "astro/components/Image.astro";
 import Layout from "../layouts/Layout.astro";
 import { PortableText } from "astro-portabletext";
 import type { PortableTextBlock } from "@portabletext/types";
 import type { ImageAsset, Slug } from "@sanity/types";
 import { urlFor } from "../utils/image";
-import {loadQuery} from '../../sanity/lib/load-query'
+import { loadQuery } from "../../sanity/lib/load-query";
 import { decodeHtmlEntities, cleanText } from "../utils/textUtils";
+
 // Query for training data
-const trainerResult = await loadQuery<Array<{trainer: string, trainerImage: string, subtitle: string, body: string, slug: string}>>({
+const trainerResult = await loadQuery<
+  Array<{
+    trainer: string;
+    trainerImage: string;
+    subtitle: string;
+    body: string;
+    slug: string;
+  }>
+>({
   query: `*[_type == 'training' && defined(slug)] | order(_createdAt desc) {
     trainerImage,
     trainer,
@@ -24,13 +34,24 @@ interface Training {
   body?: PortableTextBlock[];
   trainerImage?: ImageAsset;
 }
-const trainer = trainerResult ? trainerResult.data.map(trainer => ({
-  ...trainer,
-  trainer: typeof trainer.trainer === 'string' ? cleanText(decodeHtmlEntities(trainer.trainer)) : trainer.trainer,
-  subtitle: typeof trainer.subtitle === 'string' ? cleanText(decodeHtmlEntities(trainer.subtitle)) : trainer.subtitle,
-  body: typeof trainer.body === 'string' ? cleanText(decodeHtmlEntities(trainer.body)) : trainer.body,
-  // Apply the functions to other fields as needed
-})) : null;
+const trainer = trainerResult
+  ? trainerResult.data.map((trainer) => ({
+      ...trainer,
+      trainer:
+        typeof trainer.trainer === "string"
+          ? cleanText(decodeHtmlEntities(trainer.trainer))
+          : trainer.trainer,
+      subtitle:
+        typeof trainer.subtitle === "string"
+          ? cleanText(decodeHtmlEntities(trainer.subtitle))
+          : trainer.subtitle,
+      body:
+        typeof trainer.body === "string"
+          ? cleanText(decodeHtmlEntities(trainer.body))
+          : trainer.body,
+      // Apply the functions to other fields as needed
+    }))
+  : null;
 
 interface TrainerDescription {
   _type: "training_description";
@@ -46,89 +67,116 @@ const trainingDescriptionResult = await loadQuery<TrainerDescription>({
   }[0]`,
 });
 
-const trainingDescription: TrainerDescription | null = trainingDescriptionResult ? {
-  ...trainingDescriptionResult.data,
-  description: typeof trainingDescriptionResult.data.description === 'string' ? cleanText(decodeHtmlEntities(trainingDescriptionResult.data.description)) : trainingDescriptionResult.data.description,
-} : null;
+const trainingDescription: TrainerDescription | null = trainingDescriptionResult
+  ? {
+      ...trainingDescriptionResult.data,
+      description:
+        typeof trainingDescriptionResult.data.description === "string"
+          ? cleanText(
+              decodeHtmlEntities(trainingDescriptionResult.data.description),
+            )
+          : trainingDescriptionResult.data.description,
+    }
+  : null;
 
 // console.log('trainerR', trainerResult);
 // console.log('trainingDescription', trainingDescription);
-
 ---
 
 <Layout title="Training at Taft Hill Acres | Fort Collins Boarding Facility">
-<div class="container mx-auto  mt-8">
-  <h1 class="text-darktan text-5xl text-center my-8 font-extrabold uppercase">Our Trainers</h1>
-  <section class="lg:w-3/4 flex flex-col lg:flex-row lg:justify-center mx-auto text-center  my-6">  
+  <div class="container mx-auto mt-8">
+    <h1 class="text-darktan text-5xl text-center my-8 font-extrabold uppercase">
+      Our Trainers
+    </h1>
+    <section
+      class="lg:w-3/4 flex flex-col lg:flex-row lg:justify-center mx-auto text-center my-6"
+    >
+      {
+        trainer &&
+          typeof trainer === "object" &&
+          Object.values(trainer).map((item: { trainer: string }) => {
+            return (
+              <a
+                class="text-darktan text-2xl font-extrabold lg:mr-12 mb-4"
+                href={`#${item.trainer
+                  .replace(/[^\x20-\x7E]/g, "")
+                  .toLowerCase()
+                  .replace(/ /g, "-")}`}
+                rel="noopener noreferrer"
+              >
+                <span class="hover:border-b-2 hover:border-slate-50">
+                  {item.trainer}
+                </span>
+              </a>
+            );
+          })
+      }
+    </section>
+    <section class="lg:w-3/4 m-auto mb-16">
+      {
+        trainingDescription && (
+          <>
+            <h4 class="bg-darktan text-center text-tan text-4xl px-4 py-8">
+              {trainingDescription.description}
+            </h4>
+            {trainingDescription.mainImage && (
+              <Image
+                decoding="async"
+                width={1000}
+                height={750}
+                class="object-cover w-full m-auto"
+                src={urlFor((trainingDescription.mainImage as any).asset).url()}
+                alt="Horse and rider in the arena"
+                loading="lazy"
+              />
+            )}
+          </>
+        )
+      }
+    </section>
     {
-      trainer && typeof trainer === 'object' && 
-        Object.values(trainer).map((item: { trainer: string }) => {
-          return (
-            <a
-              class="text-darktan text-2xl font-extrabold lg:mr-12 mb-4"
-              href={`#${item.trainer.replace(/[^\x20-\x7E]/g, "").toLowerCase().replace(/ /g, "-")}`}
-              rel="noopener noreferrer"
-            >
-              <span class="hover:border-b-2 hover:border-slate-50">
-                {item.trainer}
-              </span>
-            </a>
-          );
-        })
+      trainer &&
+        typeof trainer === "object" &&
+        trainer
+          .slice()
+          .reverse()
+          .map(
+            (item: {
+              trainer: string;
+              subtitle: string;
+              body: any;
+              trainerImage: string;
+            }) => (
+              <section
+                id={`${item.trainer
+                  .replace(/[^\x20-\x7E]/g, "")
+                  .toLowerCase()
+                  .replace(/ /g, "-")}`}
+                class="lg:w-3/4 m-auto text-center mb-16"
+              >
+                <div class="bg-darktan p-4">
+                  <h3 class="text-white mb-4 md:text-2xl text-left">
+                    {item.subtitle}
+                  </h3>
+                  <h2 class="text-green text-4xl lg:text-6xl font-extrabold text-center mb-4">
+                    {item.trainer}
+                  </h2>
+                </div>
+                <Image
+                  decoding="async"
+                  width={1000}
+                  height={750}
+                  class="m-auto h-[585px] w-full object-cover"
+                  src={urlFor((item.trainerImage as any).asset).url()}
+                  alt={`Trainer ${item.trainer.replace(/[^\x20-\x7E]/g, "")} working with horse`}
+                  loading="lazy"
+                />
+                <div class="trainer px-4 lg:px-0 text-left mt-6 text-xl md:text-2xl ">
+                  <PortableText value={item.body} />
+                </div>
+              </section>
+            ),
+          )
     }
-  </section>
-  <section class="lg:w-3/4 m-auto mb-16"> 
-{trainingDescription && (
-  <>
-    <h4 class="bg-darktan text-center text-tan text-4xl px-4 py-8">
-      {trainingDescription.description}
-    </h4>
-    {trainingDescription.mainImage && (
-      <img
-        class="object-cover w-full m-auto"
-        src={urlFor((trainingDescription.mainImage as any).asset).url()}
-        alt="Horse and rider in the arena"
-      />
-    )}
-  </>
-)}
-
-  </section>
-  {  trainer && typeof trainer === 'object' && (
-    trainer
-      .slice()
-      .reverse()
-      .map(
-        (item: {
-          trainer: string;
-          subtitle: string;
-          body: any;
-          trainerImage: string;
-        }) => (
-          <section
-            id={`${item.trainer.replace(/[^\x20-\x7E]/g, "").toLowerCase().replace(/ /g, "-")}`}
-            class="lg:w-3/4 m-auto text-center mb-16"
-          >
-            <div class="bg-darktan p-4">
-              <h3 class="text-white mb-4 md:text-2xl text-left">
-                {item.subtitle}
-              </h3>
-              <h2 class="text-green text-4xl lg:text-6xl font-extrabold text-center mb-4">
-                {item.trainer}
-              </h2>
-            </div>
-            <img
-              class="m-auto h-[585px] w-full object-cover"
-              src={urlFor((item.trainerImage as any).asset).url()}
-              alt={`Trainer ${item.trainer.replace(/[^\x20-\x7E]/g, "")} working with horse`}
-            />
-            <div class="trainer px-4 lg:px-0 text-left mt-6 text-xl md:text-2xl ">
-              <PortableText value={item.body} />
-            </div>
-          </section>
-        )
-      )
-        )
-  }
   </div>
 </Layout>

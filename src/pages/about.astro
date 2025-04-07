@@ -1,4 +1,5 @@
 ---
+import Image from "astro/components/Image.astro";
 import { PortableText } from "astro-portabletext";
 import type { PortableTextBlock } from "@portabletext/types";
 import type { ImageAsset } from "@sanity/types";
@@ -89,10 +90,14 @@ const about =
       </h1>
       {
         about?.mainImage && (
-          <img
+          <Image
+            width={800}
+            height={600}
+            decoding="async"
+            loading="eager"
             class="z-10 object-cover w-full lg:w-3/4 m-auto"
             src={urlFor(about.mainImage).url()}
-            alt="About Taft Hill Acres"
+            alt="Taft Hill Acres view across wooden bridge"
           />
         )
       }

@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { urlFor } from "../utils/image";
 import { loadQuery } from '../../sanity/lib/load-query';
@@ -48,7 +49,7 @@ const facilities: Facility[] = result ? result.data.map(facility => ({
     {facilities.map((facility) => (
       <div>
         <h1 class="text-darktan text-5xl text-center my-8 font-extrabold">{cleanText(facility.title)}</h1>
-        <img class="z-10 object-cover w-full lg:w-3/4 m-auto" src={urlFor(facility.mainImage).url()} alt={`${cleanText(facility.title)}`} />
+        <Image decoding="async" width={1000} height={550} loading="eager" class="z-10 object-cover w-full lg:w-3/4 m-auto" src={urlFor(facility.mainImage).url()} alt={`${cleanText(facility.title)}`} />
         {[facility.article, facility.article2, facility.article3, facility.article4].map((content, idx) => {
           const imageKey = `mainImage${idx + 2}` as keyof Facility;
           const image = facility[imageKey];
@@ -58,7 +59,7 @@ const facilities: Facility[] = result ? result.data.map(facility => ({
                 <p class="leading-relaxed mb-8 whitespace-pre-line">{cleanText(line)}</p>
               ))}
               {image && typeof image !== 'string' && (
-                <img class="z-10 object-cover w-full lg:w-3/4 m-auto" src={urlFor(image).url()} alt={`${cleanText(facility.title)}`} />
+                <Image decoding="async" width={525} height={400} loading="lazy" class="z-10 object-cover w-full lg:w-3/4 m-auto" src={urlFor(image).url()} alt={`${cleanText(facility.title)}`} />
               )}
             </div>
           );

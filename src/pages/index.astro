@@ -1,10 +1,11 @@
 ---
+import Image from "astro/components/Image.astro";
 import Layout from "../layouts/Layout.astro";
 import { urlFor } from "../utils/image";
-import {loadQuery} from '../../sanity/lib/load-query'
+import { loadQuery } from "../../sanity/lib/load-query";
 import { PortableText } from "astro-portabletext";
 import type { PortableTextBlock } from "@portabletext/types";
-import type { ImageAsset} from "@sanity/types";
+import type { ImageAsset } from "@sanity/types";
 import { decodeHtmlEntities, cleanText } from "../utils/textUtils";
 
 interface Home {
@@ -29,7 +30,7 @@ interface Home {
 }
 
 const result = await loadQuery<Home>({
-   query: `*[_type == 'home'] | order(_createdAt desc) {
+  query: `*[_type == 'home'] | order(_createdAt desc) {
     title,
     subTitle,
     blurb,
@@ -50,55 +51,79 @@ const result = await loadQuery<Home>({
   }[0]`,
 });
 // console.log('result', result);
-const home = result && result.data ? {
-  title: typeof result.data.title === 'string' ? cleanText(decodeHtmlEntities(result.data.title)) : '',
-  subTitle: typeof result.data.subTitle === 'string' ? cleanText(decodeHtmlEntities(result.data.subTitle)) : result.data.subTitle,
-  blurb: typeof result.data.blurb === 'string' ? cleanText(decodeHtmlEntities(result.data.blurb)) : result.data.blurb,
-  blurb2: typeof result.data.blurb2 === 'string' ? cleanText(decodeHtmlEntities(result.data.blurb2)) : result.data.blurb2,
-  subTitle2: typeof result.data.subTitle2 === 'string' ? cleanText(decodeHtmlEntities(result.data.subTitle2)) : result.data.subTitle2,
-  title2: typeof result.data.title2 === 'string' ? cleanText(decodeHtmlEntities(result.data.title2)) : result.data.title2,
-  body: Array.isArray(result.data.body) ? result.data.body : [],
-  body2: Array.isArray(result.data.body2) ? result.data.body2 : [],
-  mainImage: result.data.mainImage || '',
-  mason: result.data.mason || '',
-  mason2: result.data.mason2 || '',
-  mason3: result.data.mason3 || '',
-  mason4: result.data.mason4 || '',
-  button: result.data.button || '',
-  buttoninternalLink: result.data.buttoninternalLink || '',
-  button2: result.data.button2 || '',
-  button2internalLink: result.data.button2internalLink || '',
-} :  {
-  title: '',
-  subtitle: '',
-  blurb: '',
-  blurb2: '',
-  title2: '',
-  subtitle2: '',
-  body: [],
-  body2: [],
-  mainImage: '',
-  mason: [],
-  mason2: [],
-  mason3: [],
-  mason4: [],
-  button: '',
-  buttoninternalLink: '',
-  button2: '',
-  button2internalLink: ''
-};
+const home =
+  result && result.data
+    ? {
+        title:
+          typeof result.data.title === "string"
+            ? cleanText(decodeHtmlEntities(result.data.title))
+            : "",
+        subTitle:
+          typeof result.data.subTitle === "string"
+            ? cleanText(decodeHtmlEntities(result.data.subTitle))
+            : result.data.subTitle,
+        blurb:
+          typeof result.data.blurb === "string"
+            ? cleanText(decodeHtmlEntities(result.data.blurb))
+            : result.data.blurb,
+        blurb2:
+          typeof result.data.blurb2 === "string"
+            ? cleanText(decodeHtmlEntities(result.data.blurb2))
+            : result.data.blurb2,
+        subTitle2:
+          typeof result.data.subTitle2 === "string"
+            ? cleanText(decodeHtmlEntities(result.data.subTitle2))
+            : result.data.subTitle2,
+        title2:
+          typeof result.data.title2 === "string"
+            ? cleanText(decodeHtmlEntities(result.data.title2))
+            : result.data.title2,
+        body: Array.isArray(result.data.body) ? result.data.body : [],
+        body2: Array.isArray(result.data.body2) ? result.data.body2 : [],
+        mainImage: result.data.mainImage || "",
+        mason: result.data.mason || "",
+        mason2: result.data.mason2 || "",
+        mason3: result.data.mason3 || "",
+        mason4: result.data.mason4 || "",
+        button: result.data.button || "",
+        buttoninternalLink: result.data.buttoninternalLink || "",
+        button2: result.data.button2 || "",
+        button2internalLink: result.data.button2internalLink || "",
+      }
+    : {
+        title: "",
+        subtitle: "",
+        blurb: "",
+        blurb2: "",
+        title2: "",
+        subtitle2: "",
+        body: [],
+        body2: [],
+        mainImage: "",
+        mason: [],
+        mason2: [],
+        mason3: [],
+        mason4: [],
+        button: "",
+        buttoninternalLink: "",
+        button2: "",
+        button2internalLink: "",
+      };
 // console.log('home', home);
 ---
 
 <Layout title="Taft Hill Acres">
-   <div class="text-center h-full m-auto my-8">
-    <h1 class="w-full  bg-tan text-4xl  p-6 m-auto">
+  <div class="text-center h-full m-auto my-8">
+    <h1 class="w-full bg-tan text-4xl p-6 m-auto">
       {home.title}
     </h1>
-    <div class="w-full  m-auto text-center">
+    <div class="w-full m-auto text-center">
       {
         home.mainImage && (
-          <img
+          <Image
+            decoding="async"
+            width={800}
+            height={600}
             class="z-10 object-cover w-full m-auto"
             src={urlFor((home.mainImage as any).asset).url()}
             alt="two horse noses sticking through the gate"
@@ -112,13 +137,23 @@ const home = result && result.data ? {
         >
           {home.blurb}
         </p>
-        <p class="text-2xl w-full lg:w-2/5 text-center lg:text-left lg:pl-16">{home.blurb2}</p>
+        <p class="text-2xl w-full lg:w-2/5 text-center lg:text-left lg:pl-16">
+          {home.blurb2}
+        </p>
       </div>
     </div>
     <section class="w-full bg-tan mx-auto py-8 lg:p-8">
       <div class="w-full lg:w-2/3 m-auto">
-        <h3 class="text-black text-2xl">{home.subtitle2}</h3>
-        <h2 class="text-black text-5xl text-center mb-12">{home.title2}</h2>
+        {
+          home.subtitle2 && (
+            <h3 class="text-black text-2xl">{home.subtitle2}</h3>
+          )
+        }
+        {
+          home.title2 && (
+            <h2 class="text-black text-5xl text-center mb-12">{home.title2}</h2>
+          )
+        }
 
         <div class="lg:flex justify-center lg:text-left text-2xl items-center">
           <div class="w-full mb-12 lg:w-1/2 p-4 lg:border-r-2">
@@ -132,58 +167,74 @@ const home = result && result.data ? {
     </section>
   </div>
   <section class="lg:w-2/3 m-auto mt-24 masonry sm:masonry-sm md:masonry-md">
-    <div class="text-center lg:text-left  mt-4 pb-8">
+    <div class="text-center lg:text-left mt-4 pb-8">
       <a
-        class=" bg-tan text-darktan mt-24 p-4 text-2xl font-extrabold"
-        href={cleanText(decodeHtmlEntities(home.buttoninternalLink))} rel="noopener noreferrer">{cleanText(decodeHtmlEntities(home.button))}</a
+        class="bg-tan text-darktan mt-24 p-4 text-2xl font-extrabold"
+        href={cleanText(decodeHtmlEntities(home.buttoninternalLink))}
+        rel="noopener noreferrer"
+        >{cleanText(decodeHtmlEntities(home.button))}</a
       >
     </div>
     <div class="">
       {
         home.mason && (
-          <img
+          <Image
+            decoding="async"
+            width={300}
+            height={400}
             class="mb-4 lg:mb-0"
             src={urlFor((home.mason as any).asset).url()}
-            alt=""
+            alt="View of Taft Hill Acres horses in the pasture"
             loading="lazy"
           />
-        ) 
+        )
       }
     </div>
     {
       home.mason2 && (
-        <img
+        <Image
+          decoding="async"
+          width={300}
+          height={400}
           class="mb-4 lg:mb-0"
           src={urlFor((home.mason2 as any).asset).url()}
-          alt="Cover image"
+          alt="Taft Hill Acres arena with horse and rider and the sun in the background"
           loading="lazy"
         />
-      ) 
+      )
     }
     {
       home.mason4 && (
-        <img
+        <Image
+          decoding="async"
+          width={300}
+          height={400}
           class="my-4 lg:mb-0"
           src={urlFor((home.mason4 as any).asset).url()}
-          alt="Cover image"
+         alt="View of Taft Hill Acres at sunset"
           loading="lazy"
         />
-      ) 
+      )
     }
     {
       home.mason3 && (
-        <img
+        <Image
+          decoding="async"
+          width={300}
+          height={400}
           class="mb-4 lg:mb-0"
           src={urlFor((home.mason3 as any).asset).url()}
-          alt="Cover image"
+          alt="One of Taft HIll Acres pen with no horses in it"
           loading="lazy"
         />
-      ) 
+      )
     }
     <div class="text-center lg:text-right mt-8">
       <a
-        class=" bg-tan text-darktan  p-4 text-2xl font-extrabold"
-        href={cleanText(decodeHtmlEntities(home.button2internalLink))} rel="noopener noreferrer">{cleanText(decodeHtmlEntities(home.button2))}</a
+        class="bg-tan text-darktan p-4 text-2xl font-extrabold"
+        href={cleanText(decodeHtmlEntities(home.button2internalLink))}
+        rel="noopener noreferrer"
+        >{cleanText(decodeHtmlEntities(home.button2))}</a
       >
     </div>
   </section>
