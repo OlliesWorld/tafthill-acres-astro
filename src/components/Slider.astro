@@ -253,13 +253,12 @@ const { cardsData } = Astro.props;
 
     .arrow-top:after,
     .arrow-bottom:after {
-        background-color: #1b2911;
+        background-color: #467a2c;
         content: "";
         height: 100%;
         position: absolute;
         top: 0;
         transition: all 0.15s;
-        box-shadow:;
     }
     .arrow-top {
         transform: rotate(45deg);
@@ -285,14 +284,14 @@ const { cardsData } = Astro.props;
 
     .arrow:hover .arrow-top:after {
         left: 0;
-        transition-delay: 0.15s;
-        box-shadow: 0 4px 8px rgba(242, 235, 235, 0.75); /* Add box shadow on hover */
+        transition: all 0.15s ease-in-out;
+       
     }
 
     .arrow:hover .arrow-bottom:after {
         right: 0;
-        transition-delay: 0s;
-        box-shadow: 0 4px 8px rgba(242, 235, 235, 0.75);
+
+        transition: all 0.15s ease-in-out;
     }
 </style>
 
