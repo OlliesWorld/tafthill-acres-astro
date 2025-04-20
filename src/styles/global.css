@@ -100,7 +100,7 @@ width: 80%;
 
 .menu__item {
   display: block;
-  padding: 12px 16px;
+  padding: 0 16px;
   color: #333;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
@@ -124,14 +124,15 @@ width: 80%;
     background-color: rgba(236,235,232, 1);
     margin: 0;
     width: 100%;
-    opacity: 0;
-    transition: all 0.5s ease-in-out;
+   
     @media screen and (max-width: 636px) {
-      height: 60vh;
+      height: 45vh;
       border-bottom: 2px solid rgba(145,96,51,1); 
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      padding-top: 50px;
+      padding-top: 55px;
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
     }
   }
   
@@ -170,7 +171,7 @@ width: 80%;
   
     .nav-links a {
       display: inline-block;
-      padding: 10px;
+      padding: 10px 0px;
     }
     .hamburger {
       display: none;
@@ -190,20 +191,12 @@ width: 80%;
   .hamburger {
     cursor: pointer;
     width: 45px;
-
     z-index: 1005;
     position: fixed;
     right: 25px;
     top: -5px;
   }
-  
-  /* .hamburger .line {
-    display: block;
-    width: 40px;
-    height: 5px;
-    margin-bottom: 10px;
-    background-color: #616161;
-  } */
+
   .ham {
     height: 60px !important;
     cursor: pointer;
