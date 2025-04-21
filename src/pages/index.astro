@@ -169,7 +169,7 @@ const home =
   <section class="lg:w-2/3 m-auto mt-24 masonry sm:masonry-sm md:masonry-md">
     <div class="text-center lg:text-left mt-4 pb-8">
       <a
-        class="bg-tan text-darktan mt-24 p-4 text-2xl font-extrabold"
+        class="bg-tan text-darktan mt-24 p-4 text-2xl font-extrabold hover:bg-green hover:rounded"
         href={cleanText(decodeHtmlEntities(home.buttoninternalLink))}
         rel="noopener noreferrer"
         >{cleanText(decodeHtmlEntities(home.button))}</a
@@ -182,7 +182,7 @@ const home =
             decoding="async"
             width={300}
             height={400}
-            class="mb-4 lg:mb-0"
+            class="mb-4 lg:mb-0 mt-[2.5rem]"
             src={urlFor((home.mason as any).asset).url()}
             alt="View of Taft Hill Acres horses in the pasture"
             loading="lazy"
@@ -211,7 +211,7 @@ const home =
           height={400}
           class="my-4 lg:mb-0"
           src={urlFor((home.mason4 as any).asset).url()}
-         alt="View of Taft Hill Acres at sunset"
+          alt="View of Taft Hill Acres at sunset"
           loading="lazy"
         />
       )
@@ -229,9 +229,9 @@ const home =
         />
       )
     }
-    <div class="text-center lg:text-right mt-8">
+    <div class="text-center lg:text-right mt-[4.7rem]">
       <a
-        class="bg-tan text-darktan p-4 text-2xl font-extrabold"
+        class="bg-tan text-darktan p-4 text-2xl font-extrabold hover:bg-green hover:rounded"
         href={cleanText(decodeHtmlEntities(home.button2internalLink))}
         rel="noopener noreferrer"
         >{cleanText(decodeHtmlEntities(home.button2))}</a
