@@ -122,7 +122,7 @@ width: 80%;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  transition-duration: .25s;
+  transition: all 0.3s ease-in-out;
 }
 
 .menu__item:hover {
@@ -161,6 +161,7 @@ width: 80%;
   font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
 }
 
 .nav-links a:hover,
@@ -182,7 +183,7 @@ width: 80%;
     /* margin-left: 5em; */
     display: block;
     position: static;
-    
+
     width: auto;
     background: none;
   }
@@ -200,13 +201,13 @@ width: 80%;
 .trainer a {
   text-decoration: none;
   border-bottom: 2px solid rgba(145, 96, 51, 1);
+  transition: ease-in-out 0.3s;
 }
 
 .trainer a:hover {
   background-color: rgba(145, 96, 51, 1);
   color: white;
   padding: 2px;
-  transition: ease-in-out 0.3s;
 }
 
 .hamburger {
